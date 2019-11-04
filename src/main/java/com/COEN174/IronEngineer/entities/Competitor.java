@@ -3,16 +3,13 @@ package com.COEN174.IronEngineer.entities;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "competitor")
+//@Table(name = "competitor")
 public class Competitor {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -22,7 +19,10 @@ public class Competitor {
 
     private String email;
 
-    private Integer teamId;
+    private String password;
+
+    @OneToMany(mappedBy = "competitorId")
+    private Set<Team> team;
 
     /** All distance values stored in miles */
 
@@ -32,8 +32,7 @@ public class Competitor {
 
     private Integer distanceBiked;
 
-    public boolean isOnTeam(){
-        return teamId != null;
-    }
-
+//    public boolean isOnTeam(){
+//        if()
+//    }
 }

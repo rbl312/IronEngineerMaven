@@ -2,32 +2,57 @@ package com.COEN174.IronEngineer.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.print.attribute.standard.PrintQuality;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "competitor")
+@Table(name = "Team")
 public class Team {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    private Integer teamId;
 
     private String name;
+
+    private Integer size;
+
+    @ManyToOne(fetch=FetchType.LAZY,optional = true)
+    @JoinColumn(name = "id",nullable = false)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Competitor competitorId;
 
     @ElementCollection
     private List<Integer> memberIds;
 
-    public Team(int id, String name, List<Integer> memberIds) {
-        this.id = id;
+    public Team(Integer id, String name, Integer size, List<Integer> memberIds) {
+        this.teamId = id;
         this.name = name;
+        this.size = 0;
         this.memberIds = memberIds;
     }
 
     public Team(){}
+
+    public boolean addTeamMember(Integer id){
+        if(this.size >=3){
+            return false;
+        }
+
+        this.memberIds.add(id);
+        this.size++;
+        return true;
+    }
+    public List<Integer> getTeamMembers(){
+        return this.memberIds;
+    }
 
     // TODO
     // Make this method generic so it can be reused for running and swimming
