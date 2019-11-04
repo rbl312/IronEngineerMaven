@@ -112,7 +112,7 @@ public class TeamController {
         Team t = teamRepository.findByCompetitorId(competitorId);
         Optional<Competitor> c = competitorRepository.findById(competitorId);
         if(!(c.isPresent())){
-            return "Invalid competitor";
+            return "Invalid Competitor";
         }
         Competitor comp = c.get();
         if(catergory == "swimming"){
