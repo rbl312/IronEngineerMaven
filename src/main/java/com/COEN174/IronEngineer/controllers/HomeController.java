@@ -1,5 +1,9 @@
 package com.COEN174.IronEngineer.controllers;
 
+import com.COEN174.IronEngineer.entities.Competitor;
+import com.COEN174.IronEngineer.repositories.CompetitorRepository;
+import com.COEN174.IronEngineer.repositories.TeamRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
@@ -10,9 +14,14 @@ import com.COEN174.IronEngineer.entities.Team;
 import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class HomeController {
+    @Autowired
+    private TeamRepository teamRepository;
+    @Autowired
+    private CompetitorRepository competitorRepository;
 
     @RequestMapping("/home")
     public ModelAndView homeView(Principal principal) {
@@ -25,13 +34,21 @@ public class HomeController {
         map.put("name", (String) details.get("name"));
         map.put("email", (String) details.get("email"));
 
-        String name = map.get("name");
 
+
+
+        if(competitorRepository.findByEmail(map.get("email")) == null){
+            return new ModelAndView("redirect:/register");
+        }
+
+
+        String name = map.get("name");
         //If not logged in, redirect to login page
         boolean is_logged_in = true;
 
         //This should be a value of User / Participant
         //Would probably look more like if(user.getTeamId() == null) etc..
+
         boolean is_on_a_team = true;
 
         //TODO
