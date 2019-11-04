@@ -36,12 +36,12 @@ public class HomeController {
 
         //TODO
         //There should be a getter function to get the user's team
-//        Team userTeam = new Team(11, "Team1", null);
+        Team userTeam = new Team(11, "Team1", null);
 
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("name", name);
         modelAndView.addObject("is_on_a_team", is_on_a_team);
-        modelAndView.addObject("userTeam", "ryans team");
+        modelAndView.addObject("userTeam", userTeam);
         return modelAndView;
     }
 }

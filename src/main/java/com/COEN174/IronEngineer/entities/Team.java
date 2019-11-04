@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.print.attribute.standard.PrintQuality;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -24,30 +25,27 @@ public class Team {
 
     private Integer size;
 
-    @ManyToOne(fetch=FetchType.LAZY,optional = true)
-    @JoinColumn(name = "id",nullable = false)
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Competitor competitorId;
-
     @ElementCollection
     private List<Integer> memberIds;
 
-    public Team(Integer id, String name, Integer size, List<Integer> memberIds) {
+    public Team(Integer id, String name, List<Integer> memberIds) {
         this.teamId = id;
         this.name = name;
-        this.size = 0;
         this.memberIds = memberIds;
     }
 
     public Team(){}
 
     public boolean addTeamMember(Integer id){
-        if(this.size >=3){
+        if(memberIds == null) {
+            List<Integer> memberIds = new ArrayList<>();
+        }
+
+        else if(this.size >=3){
             return false;
         }
 
         this.memberIds.add(id);
-        this.size++;
         return true;
     }
     public List<Integer> getTeamMembers(){
