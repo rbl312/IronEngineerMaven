@@ -1,7 +1,10 @@
 package com.COEN174.IronEngineer.controllers;
 
+import com.COEN174.IronEngineer.entities.Competitor;
 import com.COEN174.IronEngineer.entities.Log;
 
+import com.COEN174.IronEngineer.repositories.CompetitorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,9 @@ import javax.validation.Valid;
 @Controller
 public class LogController {
 
+    @Autowired
+    private CompetitorRepository competitorRepository;
+
     @RequestMapping("/log")
     public ModelAndView enterLogView() {
 
@@ -24,12 +30,23 @@ public class LogController {
     }
 
     @RequestMapping(value = "/addLog", method = RequestMethod.POST)
-    public ModelAndView addTeam(@Valid @ModelAttribute("newLog")Log newLog, BindingResult result, ModelMap model){
+    public ModelAndView addLog(@Valid @ModelAttribute("newLog")Log newLog, BindingResult result, ModelMap model){
         //Add new team to database
         //We should have this user Id from their user context when theyre logged in
-        int userId = 123;
-        //Competitor user = getCompetitorByUserId(userId);
-        //competitor.addLog(newLog);
+        String userEmail = "gshappell@scu.edu";
+        Competitor user = competitorRepository.findByEmail(userEmail);
+        if(user == null){
+            System.out.println("NULLLLL !!!!!!! D:D:D:D");
+            return new ModelAndView("redirect:/home");
+        }
+        if(newLog == null) {
+            System.out.println("NEW LOG IS NULL");
+        }
+
+        user.setDistanceRan(user.getDistanceRan()+newLog.getDistanceRan());
+        user.setDistanceBiked(user.getDistanceBiked()+newLog.getDistanceBiked());
+        user.setDistanceSwam(user.getDistanceSwam()+newLog.getDistanceSwam());
+        competitorRepository.save(user);
         return new ModelAndView("redirect:/home");
     }
 }

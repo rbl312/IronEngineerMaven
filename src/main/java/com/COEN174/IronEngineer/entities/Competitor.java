@@ -13,26 +13,37 @@ import java.util.Set;
 public class Competitor {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    private Integer competitorId;
 
     private String name;
 
     private String email;
 
-    private String password;
-
-    @OneToMany(mappedBy = "competitorId")
-    private Set<Team> team;
-
     /** All distance values stored in miles */
 
-    private Integer distanceRan;
+    private Float distanceRan;
 
-    private Integer distanceSwam;
+    private Float distanceSwam;
 
-    private Integer distanceBiked;
+    private Float distanceBiked;
 
+    public float getDistanceRan(){
+        if(distanceRan == null)
+            return 0.0f;
+        return distanceRan;
+    }
+    public float getDistanceBiked(){
+        if(distanceBiked == null)
+            return 0.0f;
+        return distanceBiked;
+    }
+    public float getDistanceSwam(){
+        if(distanceSwam == null)
+            return 0.0f;
+        return distanceSwam;
+    }
 //    public boolean isOnTeam(){
 //        if()
 //    }
+
 }
