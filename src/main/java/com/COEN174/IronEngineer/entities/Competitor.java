@@ -21,7 +21,7 @@ public class Competitor {
     private String password;
 
     @ManyToOne
-    private Integer teamId;
+    private Team team;
 
     /** All distance values stored in miles */
 
@@ -31,8 +31,7 @@ public class Competitor {
 
     private Integer distanceBiked;
 
-    public boolean isOnTeam(){
-        return teamId != null;
-    }
-
+//    public boolean isOnTeam(){
+//        if()
+//    }
 }

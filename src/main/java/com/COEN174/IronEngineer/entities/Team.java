@@ -18,12 +18,15 @@ public class Team {
 
     private String name;
 
+    private Integer size;
+
     @ElementCollection
     private List<Integer> memberIds;
 
-    public Team(int id, String name, List<Integer> memberIds) {
+    public Team(Integer id, String name, Integer size, List<Integer> memberIds) {
         this.id = id;
         this.name = name;
+        this.size = 0;
         this.memberIds = memberIds;
     }
 

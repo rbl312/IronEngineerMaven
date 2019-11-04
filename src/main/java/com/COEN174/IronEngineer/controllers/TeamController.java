@@ -1,6 +1,8 @@
 package com.COEN174.IronEngineer.controllers;
 
 import com.COEN174.IronEngineer.entities.Team;
+import com.COEN174.IronEngineer.repositories.TeamRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -14,8 +16,15 @@ import java.util.List;
 @Controller
 @RequestMapping("/team")
 public class TeamController {
+    @Autowired
+    private TeamRepository teamRepository;
 
     //Setup user context
+    @GetMapping("/all")
+    public @ResponseBody Iterable<Team> findAllTeams(){
+        return teamRepository.findAll();
+    }
+
 
     @RequestMapping("/find")
     public ModelAndView findTeam(){
@@ -46,6 +55,7 @@ public class TeamController {
         //if they are already on a team, redirect them to the home page
 
         //Add member to team
+
 
         //redirect to home page
         return new ModelAndView("redirect:/home");
