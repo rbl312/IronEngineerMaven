@@ -6,5 +6,6 @@ import com.COEN174.IronEngineer.entities.Team;
 import java.util.List;
 
 public interface TeamRepository extends CrudRepository<Team,Integer>{
-    public List<Team> findByName(String name);
+    public Team findByName(String name);
+    public Team findByCompetitorId(Integer id);
 }

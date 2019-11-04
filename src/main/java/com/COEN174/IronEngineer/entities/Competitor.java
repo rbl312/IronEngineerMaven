@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -20,8 +21,8 @@ public class Competitor {
 
     private String password;
 
-    @ManyToOne
-    private Team team;
+    @OneToMany(mappedBy = "competitorId")
+    private Set<Team> team;
 
     /** All distance values stored in miles */
 

@@ -6,5 +6,6 @@ import com.COEN174.IronEngineer.entities.Competitor;
 import java.util.List;
 
 public interface CompetitorRepository extends CrudRepository<Competitor,Integer> {
-    public List<Competitor> findByTeamId(Integer teamId);
+    public List<Competitor> findByTeamTeamId(Integer teamId);
+    public Competitor findByEmail(String email);
 }
