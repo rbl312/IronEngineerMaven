@@ -1,0 +1,18 @@
+security:
+  oauth2:
+    client:
+      clientId: 621229981540-4rv77cfqfd155ssncnsrq2c11o3275s9.apps.googleusercontent.com
+      clientSecret: GishKmfZKwQsi5b6eiXcFaD3
+      accessTokenUri: https://www.googleapis.com/oauth2/v3/token
+      userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+      tokenName: oauth_token
+      authenticationScheme: query
+      clientAuthenticationScheme: form
+      scope: profile email
+    resource:
+      userInfoUri: https://www.googleapis.com/userinfo/v2/me
+      prefer-token-info: false
+
+logging:
+  level:
+    org.springframework.security: DEBUG

@@ -5,6 +5,7 @@
 </head>
 
 <body>
+
     <div>Welcome <c:out value= "${name}"/>!</div>
     <c:choose>
         <c:when test="${not is_on_a_team}">
