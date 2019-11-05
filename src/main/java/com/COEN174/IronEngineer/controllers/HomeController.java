@@ -1,5 +1,9 @@
 package com.COEN174.IronEngineer.controllers;
 
+import com.COEN174.IronEngineer.entities.Competitor;
+import com.COEN174.IronEngineer.repositories.CompetitorRepository;
+import com.COEN174.IronEngineer.repositories.TeamRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +18,12 @@ import java.util.Map;
 @Controller
 public class HomeController {
 
+    @Autowired
+    private CompetitorRepository competitorRepository;
+
+    @Autowired
+    private TeamRepository teamRepository;
+
     @RequestMapping("/home")
     public ModelAndView homeView(Principal principal) {
 
@@ -21,26 +31,25 @@ public class HomeController {
         //i.e. userContext from Google Sign on
 
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
-        Map<String, String> map = new LinkedHashMap<>();
-        map.put("name", (String) details.get("name"));
-        map.put("email", (String) details.get("email"));
+        String userName = (String) details.get("name");
+        String userEmail =  (String) details.get("email");
 
-        String name = map.get("name");
+        Competitor user = competitorRepository.findByEmail(userEmail);
 
-        //If not logged in, redirect to login page
-        boolean is_logged_in = true;
+        //User is not in the database redirect them to the registration
+        if(user == null){
+
+        }
+
+        Team userTeam = teamRepository.findByTeamId(user.getTeamIdFK());
 
         //This should be a value of User / Participant
         //Would probably look more like if(user.getTeamId() == null) etc..
-        boolean is_on_a_team = true;
-
-        //TODO
-        //There should be a getter function to get the user's team
-        Team userTeam = new Team(11, "Team1", null);
+        boolean isOnTeam = userTeam != null;
 
         ModelAndView modelAndView = new ModelAndView("home");
-        modelAndView.addObject("name", name);
-        modelAndView.addObject("is_on_a_team", is_on_a_team);
+        modelAndView.addObject("name", userName);
+        modelAndView.addObject("isOnTeam", isOnTeam);
         modelAndView.addObject("userTeam", userTeam);
         return modelAndView;
     }

@@ -13,18 +13,27 @@ import java.util.Set;
 public class Competitor {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "competitor_id")
     private Integer competitorId;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "team_id")
+    private Integer teamIdFK;
 
     /** All distance values stored in miles */
 
+    @Column(name = "distance_ran")
     private Float distanceRan;
 
+    @Column(name = "distance_swam")
     private Float distanceSwam;
 
+    @Column(name = "distance_biked")
     private Float distanceBiked;
 
     public float getDistanceRan(){

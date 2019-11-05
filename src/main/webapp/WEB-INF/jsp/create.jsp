@@ -11,8 +11,8 @@
               action="/team/add" modelAttribute="newTeam">
                  <table>
                     <tr>
-                        <td><form:label path="name">Team Name</form:label></td>
-                        <td><form:input path="name"/></td>
+                        <td><form:label path="teamName">Team Name</form:label></td>
+                        <td><form:input path="teamName"/></td>
                     </tr>
                     <tr>
                         <td><input type="submit" value="Submit"/></td>

@@ -7,7 +7,7 @@
 <body>
     <h2>Open Teams!</h2>
     <c:forEach items="${joinableTeams}" var="team">
-        <c:out value= "${team.name}" /> <a href="/team/join/${team.id}">Join this team</a>
+        <c:out value= "${team.teamName}" /> <a href="/team/join/${team.teamId}">Join this team</a>
         </br>
     </c:forEach>
 </body>

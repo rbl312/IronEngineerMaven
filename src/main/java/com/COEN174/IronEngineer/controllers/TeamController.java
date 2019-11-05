@@ -5,6 +5,7 @@ import com.COEN174.IronEngineer.entities.Team;
 import com.COEN174.IronEngineer.repositories.CompetitorRepository;
 import com.COEN174.IronEngineer.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -40,8 +43,8 @@ public class TeamController {
         //For the purposes of this demo, that means any team with less than 3 people
 
         List<Team> joinableTeams = new ArrayList<>();
-        Team team1 = new Team(11, "Team1", null);
-        Team team2 = new Team(12, "Team2", null);
+        Team team1 = new Team("Team1", null);
+        Team team2 = new Team("Team2", null);
         joinableTeams.add(team1);
         joinableTeams.add(team2);
 
@@ -54,19 +57,24 @@ public class TeamController {
     }
 
     @RequestMapping(value = "/join/{teamName}")
-    public ModelAndView joinTeam(@PathVariable("teamName") String teamName,@RequestParam String email){
+    public ModelAndView joinTeam(@PathVariable("teamName") String teamName, Principal principal){
+
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String userName = (String) details.get("name");
+        String userEmail =  (String) details.get("email");
+
+        //Add member to team
+        Competitor c = competitorRepository.findByEmail(userEmail);
 
         //TODO
         //if they are already on a team, redirect them to the home page
 
-        //Add member to team
-        Competitor c = competitorRepository.findByEmail(email);
-        Integer teamMateId = c.getCompetitorId();
-
-        Team t = teamRepository.findByName(teamName);
-        t.addTeamMember(teamMateId);
+        Team t = teamRepository.findByTeamName(teamName);
+        t.addTeamMember(c);
         teamRepository.save(t);
 
+        c.setTeamIdFK(t.getTeamId());
+        competitorRepository.save(c);
         //redirect to home page
         return new ModelAndView("redirect:/home");
     }
@@ -83,11 +91,14 @@ public class TeamController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addTeam(@Valid @ModelAttribute("newTeam")Team newTeam, BindingResult result, ModelMap model){
-        //Add new team to database
-        //We should have this user Id from their user context when theyre logged in
-        int userId = 123;
-        newTeam.addTeamMember(userId);
+    public ModelAndView addTeam(@Valid @ModelAttribute("newTeam")Team newTeam, BindingResult result, ModelMap model, Principal principal){
+
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String userEmail =  (String) details.get("email");
+
+        Competitor competitor = competitorRepository.findByEmail(userEmail);
+
+        newTeam.addTeamMember(competitor);
         teamRepository.save(newTeam);
         return new ModelAndView("redirect:/home");
     }
