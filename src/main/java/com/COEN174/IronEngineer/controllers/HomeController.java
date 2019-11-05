@@ -42,13 +42,20 @@ public class HomeController {
             return new ModelAndView("redirect:/register");
         }
 
-        Team userTeam = teamRepository.findByTeamId(user.getTeamIdFK());
 
 
         //This should be a value of User / Participant
         //Would probably look more like if(user.getTeamId() == null) etc..
-        boolean isOnTeam =  userTeam != null;
-
+        boolean isOnTeam;
+        Team userTeam;
+        if(teamRepository.findByTeamId(user.getTeamIdFK()).isPresent()) {
+            isOnTeam = true;
+            userTeam = teamRepository.findByTeamId(user.getTeamIdFK()).get();
+        }
+        else{
+            isOnTeam = false;
+            userTeam = teamRepository.findByTeamId(user.getTeamIdFK()).get();
+        }
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("name", userName);
         modelAndView.addObject("isOnTeam", isOnTeam);
