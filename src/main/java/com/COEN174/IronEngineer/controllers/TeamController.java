@@ -63,6 +63,7 @@ public class TeamController {
         if(!(competitorRepository.findById(userId).isPresent())){
             //TODO:
             // Make this return an error page
+            System.out.print("\n\n\n Error in TeamController.joinTeam.findById()\n\n\n");
             return new ModelAndView("redirect/home");
         }
         Competitor c = competitorRepository.findById(userId).get();
@@ -72,11 +73,17 @@ public class TeamController {
         if(!(teamRepository.findByTeamId(teamId).isPresent())){
             //TODO:
             // Make this return an error page
+            System.out.print("\n\n\n Error in TeamController.joinTeam.findByTeamId()\n\n\n");
             return new ModelAndView("redirect/home");
         }
         Team t = teamRepository.findByTeamId(teamId).get();
 //        t.addTeamMember(c);
         c.setTeamIdFK(t.getTeamId());
+
+        System.out.println("\n\n Competitor:");
+        System.out.println(c.toString() + "\n\n");
+        System.out.println("\n\n Team:");
+        System.out.println(t.toString() + "\n\n");
 
         competitorRepository.save(c);
         teamRepository.save(t);
