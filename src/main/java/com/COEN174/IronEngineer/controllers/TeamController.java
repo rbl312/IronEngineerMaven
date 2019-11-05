@@ -51,18 +51,29 @@ public class TeamController {
     }
 
     @RequestMapping(value = "/join/{teamId}")
-    public ModelAndView joinTeam(@PathVariable("teamid") Integer teamId, Principal principal){
+    public ModelAndView joinTeam(@PathVariable("teamId") Integer teamId, Principal principal){
 
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String userName = (String) details.get("name");
         String userEmail =  (String) details.get("email");
+        Integer userId = (Integer) details.get("competitor_id");
 
         //Add member to team
-        Competitor c = competitorRepository.findByEmail(userEmail);
-
+//        Competitor c = competitorRepository.findByEmail(userEmail);
+        if(!(competitorRepository.findById(userId).isPresent())){
+            //TODO:
+            // Make this return an error page
+            return new ModelAndView("redirect/home");
+        }
+        Competitor c = competitorRepository.findById(userId).get();
         //TODO
         //if they are already on a team, redirect them to the home page
 
+        if(!(teamRepository.findByTeamId(teamId).isPresent())){
+            //TODO:
+            // Make this return an error page
+            return new ModelAndView("redirect/home");
+        }
         Team t = teamRepository.findByTeamId(teamId);
         t.addTeamMember(c);
         teamRepository.save(t);
