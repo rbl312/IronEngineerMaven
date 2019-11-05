@@ -44,9 +44,10 @@ public class HomeController {
 
         Team userTeam = teamRepository.findByTeamId(user.getTeamIdFK());
 
+
         //This should be a value of User / Participant
         //Would probably look more like if(user.getTeamId() == null) etc..
-        boolean isOnTeam = userTeam != null;
+        boolean isOnTeam =  userTeam != null;
 
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("name", userName);

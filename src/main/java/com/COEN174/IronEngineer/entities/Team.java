@@ -55,7 +55,7 @@ public class Team {
 
     // TODO
     // Make this method generic so it can be reused for running and swimming
-    public int getDistanceBiked(){
+    public float getDistanceBiked(){
         if(competitors == null)
             return 0;
         int totalDistanceBiked = 0;
@@ -64,7 +64,7 @@ public class Team {
         }
         return totalDistanceBiked;
     }
-    public int getDistanceRan(){
+    public float getDistanceRan(){
         if(competitors == null)
             return 0;
         int totalDistanceRan = 0;
@@ -73,7 +73,7 @@ public class Team {
         }
         return totalDistanceRan;
     }
-    public int getDistanceSwam(){
+    public float getDistanceSwam(){
         if(competitors == null)
             return 0;
         int totalDistanceSwam = 0;

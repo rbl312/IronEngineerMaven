@@ -42,6 +42,13 @@ public class LogController {
         if(newLog == null) {
             System.out.println("NEW LOG IS NULL");
         }
+        System.out.println(newLog.getDistanceBiked());
+        System.out.println(newLog.getDistanceRan());
+        System.out.println(newLog.getDistanceSwam());
+        System.out.println("USER STUFF");
+        System.out.println(user.getDistanceBiked());
+        System.out.println(user.getDistanceRan());
+        System.out.println(user.getDistanceSwam());
 
         user.setDistanceRan(user.getDistanceRan()+newLog.getDistanceRan());
         user.setDistanceBiked(user.getDistanceBiked()+newLog.getDistanceBiked());
