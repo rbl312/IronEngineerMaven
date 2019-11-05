@@ -56,17 +56,20 @@ public class TeamController {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String userName = (String) details.get("name");
         String userEmail =  (String) details.get("email");
-        Integer userId = (Integer) details.get("competitor_id");
+        Integer userId;
+
+
 
         //Add member to team
-//        Competitor c = competitorRepository.findByEmail(userEmail);
+        Competitor c = competitorRepository.findByEmail(userEmail);
+        userId = c.getCompetitorId();
         if(!(competitorRepository.findById(userId).isPresent())){
             //TODO:
             // Make this return an error page
             System.out.print("\n\n\n Error in TeamController.joinTeam.findById()\n\n\n");
             return new ModelAndView("redirect/home");
         }
-        Competitor c = competitorRepository.findById(userId).get();
+        c = competitorRepository.findById(userId).get();
         //TODO
         //if they are already on a team, redirect them to the home page
 
