@@ -74,12 +74,12 @@ public class TeamController {
             // Make this return an error page
             return new ModelAndView("redirect/home");
         }
-        Team t = teamRepository.findByTeamId(teamId);
-        t.addTeamMember(c);
-        teamRepository.save(t);
-
+        Team t = teamRepository.findByTeamId(teamId).get();
+//        t.addTeamMember(c);
         c.setTeamIdFK(t.getTeamId());
+
         competitorRepository.save(c);
+        teamRepository.save(t);
         //redirect to home page
         return new ModelAndView("redirect:/home");
     }
