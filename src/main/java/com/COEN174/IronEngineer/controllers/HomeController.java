@@ -14,6 +14,7 @@ import com.COEN174.IronEngineer.entities.Team;
 import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class HomeController {
@@ -38,7 +39,7 @@ public class HomeController {
 
         //User is not in the database redirect them to the registration
         if(user == null){
-
+            return new ModelAndView("redirect:/register");
         }
 
         Team userTeam = teamRepository.findByTeamId(user.getTeamIdFK());
