@@ -38,26 +38,20 @@ public class TeamController {
     public ModelAndView findTeam(){
         ModelAndView modelAndView = new ModelAndView("findTeam");
 
-        //TODO
-        //Replace this with a function which gets all joinable teams
-        //For the purposes of this demo, that means any team with less than 3 people
-
+        Iterable<Team> teams= teamRepository.findAll();
         List<Team> joinableTeams = new ArrayList<>();
-        Team team1 = new Team("Team1", null);
-        Team team2 = new Team("Team2", null);
-        joinableTeams.add(team1);
-        joinableTeams.add(team2);
+        for (Team team : teams) {
+            if(team.getCompetitors().size()<3)
+                joinableTeams.add(team);
+        }
 
         modelAndView.addObject("joinableTeams", joinableTeams);
-
-        //TODO
-        //if they are already on a team, redirect them to the home page
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "/join/{teamName}")
-    public ModelAndView joinTeam(@PathVariable("teamName") String teamName, Principal principal){
+    @RequestMapping(value = "/join/{teamId}")
+    public ModelAndView joinTeam(@PathVariable("teamid") Integer teamId, Principal principal){
 
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String userName = (String) details.get("name");
@@ -69,7 +63,7 @@ public class TeamController {
         //TODO
         //if they are already on a team, redirect them to the home page
 
-        Team t = teamRepository.findByTeamName(teamName);
+        Team t = teamRepository.findByTeamId(teamId);
         t.addTeamMember(c);
         teamRepository.save(t);
 

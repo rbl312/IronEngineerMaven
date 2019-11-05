@@ -36,6 +36,16 @@ public class Competitor {
     @Column(name = "distance_biked")
     private Float distanceBiked;
 
+    public Competitor(String name, String email){
+        this.name = name;
+        this.email = email;
+        this.distanceRan = 0.0f;
+        this.distanceBiked = 0.0f;
+        this.distanceSwam = 0.0f;
+    }
+
+    public Competitor(){}
+
     public float getDistanceRan(){
         if(distanceRan == null)
             return 0.0f;
