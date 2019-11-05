@@ -8,7 +8,7 @@
 
     <div>Welcome <c:out value= "${name}"/>!</div>
     <c:choose>
-        <c:when test="${not isOnTeam}">
+        <c:when test="${isOnTeam == false}">
             <a href="/team/find">Join a team</a> <br />
             <a href="/team/create">Create a team</a>
         </c:when>
