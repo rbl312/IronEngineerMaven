@@ -38,7 +38,7 @@ public class Team {
     public Team(){}
 
     public boolean addTeamMember(Competitor competitor){
-        if(competitors == null) {
+        if(this.competitors == null) {
             this.competitors = new HashSet<>();
         }
 
@@ -49,6 +49,17 @@ public class Team {
         this.competitors.add(competitor);
         return true;
     }
+
+    public boolean removeTeamMember(Competitor competitor){
+        if(this.competitors == null || !this.competitors.contains(competitor)){
+            return false;
+        }
+        else{
+            this.competitors.remove(competitor);
+            return true;
+        }
+    }
+
     public Set<Competitor> getTeamMembers(){
         return this.competitors;
     }

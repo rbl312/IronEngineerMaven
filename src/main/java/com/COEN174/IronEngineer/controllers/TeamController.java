@@ -104,6 +104,7 @@ public class TeamController {
         Team t = teamRepository.findByTeamId(teamId).get();
 //        t.addTeamMember(c);
         c.setTeamIdFK(t.getTeamId());
+        t.addTeamMember(c);
 
         System.out.println("\n\n Competitor:");
         System.out.println(c.toString() + "\n\n");
@@ -137,6 +138,33 @@ public class TeamController {
 
         newTeam.addTeamMember(competitor);
         teamRepository.save(newTeam);
+        return new ModelAndView("redirect:/home");
+    }
+
+    @RequestMapping(value = "/leave/teamName", method = RequestMethod.POST)
+    public ModelAndView leaveTeam(@PathVariable("teamName") String teamName,Principal principal){
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String userEmail = (String) details.get("email");
+        Competitor competitor = competitorRepository.findByEmail(userEmail);
+
+        if(!teamRepository.findByTeamName(teamName).isPresent()){
+            //TODO: return error page
+            System.out.println("\n\n cannot leave team: team does not exist\n\n");
+            return new ModelAndView("redirect:/home");
+        }
+        if(!teamRepository.findByTeamId(competitor.getTeamIdFK()).isPresent()){
+            //TODO: return error page
+            System.out.println("\n\n cannot leave team: youre not on the team\n\n");
+            return new ModelAndView("rediect:/home");
+        }
+
+        Team t = teamRepository.findByTeamId(competitor.getTeamIdFK()).get();
+        t.removeTeamMember(competitor);
+        competitor.setTeamIdFK(null);
+
+        competitorRepository.save(competitor);
+        teamRepository.save(t);
+
         return new ModelAndView("redirect:/home");
     }
 }
