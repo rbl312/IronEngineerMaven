@@ -7,6 +7,7 @@ import com.COEN174.IronEngineer.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +50,27 @@ public class TeamController {
 
         return modelAndView;
     }
+
+    @RequestMapping("/find/{teamName}")
+    public ModelAndView findTeam(@PathVariable("teamName") String teamName){
+        ModelAndView modelAndView = new ModelAndView("findTeam");
+
+        //TODO: format page returned on site correctly
+
+        if(!(teamRepository.findByTeamName(teamName).isPresent())){
+            String noTeam = "No team of that name found. \n";
+            modelAndView.addObject("noTeam",noTeam);
+            return modelAndView;
+        }
+
+        Team foundTeam = teamRepository.findByTeamName(teamName).get();
+        List<Team> teamList = new ArrayList<>();
+        teamList.add(foundTeam);
+        modelAndView.addObject("teamList",teamList);
+
+        return modelAndView;
+    }
+
 
     @RequestMapping(value = "/join/{teamId}")
     public ModelAndView joinTeam(@PathVariable("teamId") Integer teamId, Principal principal){
