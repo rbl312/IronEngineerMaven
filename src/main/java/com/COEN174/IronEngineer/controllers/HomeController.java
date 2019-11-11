@@ -50,11 +50,11 @@ public class HomeController {
         //This should be a value of User / Participant
         //Would probably look more like if(user.getTeamId() == null) etc..
         boolean isOnTeam =  userTeam != null;
-
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("name", userName);
         modelAndView.addObject("isOnTeam", isOnTeam);
         modelAndView.addObject("userTeam", userTeam);
+        modelAndView.addObject("isApproved", userTeam.getApproved());
         return modelAndView;
     }
 }
