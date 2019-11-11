@@ -6,11 +6,11 @@
 
 <body>
 
-<div>Welcome <c:out value= "${name}"/>!</div>
+<div>Welcome <c:out value= "${name}"/>! </br>You are on Admin page! </br> </div>
 <c:choose>
     <c:when test="${isAdmin == 1}">
-        <a href="/team/find">Admin Page1</a> <br />
-        <a href="/team/create">Admin Page2</a>
+        <a href="/admin/approve">Approve team names</a> <br />
+        <a href="/admin/allteam">View All Team Progress</a>
     </c:when>
     <c:otherwise>
         Team: <c:out value = "${userTeam.teamName}"/> </br>
