@@ -16,10 +16,12 @@
             Team: <c:out value = "${userTeam.teamName}"/>
             <c:choose>
                 <c:when test="${isApproved != 1}">
-                    your team is not approved!
+                    </br>
+                    <font color="red">    NAME NOT APPROVED</font>
                 </c:when>
                 <c:otherwise>
-                    your team is approved!
+                    </br>
+                    <font color="green">    NAME APPROVED</font>
                 </c:otherwise>
             </c:choose>
             </br>
