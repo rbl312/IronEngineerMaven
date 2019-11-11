@@ -64,6 +64,11 @@ public class TeamController {
         //if they are already on a team, redirect them to the home page
 
         Team t = teamRepository.findByTeamId(teamId);
+
+        if(t.getCompetitors().size()>=3){
+            return new ModelAndView("redirect:/team/join");
+        }
+        
         t.addTeamMember(c);
         t.setSize(t.getSize()+1);
         teamRepository.save(t);
