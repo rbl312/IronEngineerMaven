@@ -5,6 +5,7 @@ import com.COEN174.IronEngineer.entities.Log;
 
 import com.COEN174.IronEngineer.repositories.CompetitorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Controller
 public class LogController {
@@ -30,10 +34,14 @@ public class LogController {
     }
 
     @RequestMapping(value = "/addLog", method = RequestMethod.POST)
-    public ModelAndView addLog(@Valid @ModelAttribute("newLog")Log newLog, BindingResult result, ModelMap model){
+    public ModelAndView addLog(@Valid @ModelAttribute("newLog")Log newLog, BindingResult result, ModelMap model, Principal principal){
         //Add new team to database
         //We should have this user Id from their user context when theyre logged in
-        String userEmail = "gshappell@scu.edu";
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        Map<String, String> map = new LinkedHashMap<>();
+        String userName =  (String) details.get("name");
+        String userEmail = (String) details.get("email");
+
         Competitor user = competitorRepository.findByEmail(userEmail);
         if(user == null){
             System.out.println("NULLLLL !!!!!!! D:D:D:D");

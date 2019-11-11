@@ -51,7 +51,7 @@ public class TeamController {
     }
 
     @RequestMapping(value = "/join/{teamId}")
-    public ModelAndView joinTeam(@PathVariable("teamid") Integer teamId, Principal principal){
+    public ModelAndView joinTeam(@PathVariable("teamId") Integer teamId, Principal principal){
 
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String userName = (String) details.get("name");
@@ -65,6 +65,7 @@ public class TeamController {
 
         Team t = teamRepository.findByTeamId(teamId);
         t.addTeamMember(c);
+        t.setSize(t.getSize()+1);
         teamRepository.save(t);
 
         c.setTeamIdFK(t.getTeamId());
@@ -93,7 +94,11 @@ public class TeamController {
         Competitor competitor = competitorRepository.findByEmail(userEmail);
 
         newTeam.addTeamMember(competitor);
+        newTeam.setSize(1);
         teamRepository.save(newTeam);
+        System.out.println(newTeam.getTeamId());
+        competitor.setTeamIdFK(newTeam.getTeamId());
+        competitorRepository.save(competitor);
         return new ModelAndView("redirect:/home");
     }
 }

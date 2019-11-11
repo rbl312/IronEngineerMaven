@@ -26,6 +26,12 @@ public class Team {
     @Column(name = "team_name")
     private String teamName;
 
+    @Column(name = "size")
+    private Integer size;
+
+    @Column(name = "approved")
+    private Integer approved;
+
     @OneToMany(mappedBy = "teamIdFK")
     private Set<Competitor> competitors;
 
