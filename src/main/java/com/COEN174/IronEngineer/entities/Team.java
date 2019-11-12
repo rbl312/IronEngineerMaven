@@ -55,6 +55,18 @@ public class Team {
         this.competitors.add(competitor);
         return true;
     }
+
+    public boolean removeTeamMember(Competitor competitor){
+        if(this.competitors == null || !this.competitors.contains(competitor)){
+            return false;
+        }
+        else{
+            this.competitors.remove(competitor);
+            this.size--;
+            return true;
+        }
+    }
+
     public Set<Competitor> getTeamMembers(){
         return this.competitors;
     }
