@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
     @Autowired
     private CompetitorRepository competitorRepository;
@@ -24,7 +25,7 @@ public class AdminController {
     @Autowired
     private TeamRepository teamRepository;
 
-    @RequestMapping("/admin")
+    @RequestMapping("/home")
     public ModelAndView adminView(Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String userName = (String) details.get("name");
@@ -40,7 +41,7 @@ public class AdminController {
         return modelAndView;
 
     }
-    @RequestMapping("/admin/approve")
+    @RequestMapping("/approve")
     public ModelAndView approveTeam(){
         ModelAndView modelAndView = new ModelAndView("approveTeam");
 
@@ -55,7 +56,7 @@ public class AdminController {
 
         return modelAndView;
     }
-    @RequestMapping(value = "/admin/approve/{teamId}")
+    @RequestMapping(value = "/approve/{teamId}")
     public ModelAndView joinTeam(@PathVariable("teamId") Integer teamId, Principal principal){
 
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
