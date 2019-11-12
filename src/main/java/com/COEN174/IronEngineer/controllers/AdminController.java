@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -73,5 +74,27 @@ public class AdminController {
 
         //redirect to home page
         return new ModelAndView("redirect:/admin/approve");
+    }
+
+    @RequestMapping(value = "/remove/{team_id}",method = RequestMethod.GET)
+    public ModelAndView removeTeam(@PathVariable("team_id") Integer team_id,Principal principal){
+
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String userName = (String) details.get("name");
+        String userEmail =  (String) details.get("email");
+        Competitor c = competitorRepository.findByEmail(userEmail);
+        if(c.getAdmin() == 0){
+            return new ModelAndView("redirect:/home");
+        }
+
+        Team t = teamRepository.findByTeamId(team_id);
+
+        for(Competitor comp :t.getCompetitors()){
+            t.removeTeamMember(comp);
+            comp.setTeamIdFK(null);
+            competitorRepository.save(comp);
+        }
+        teamRepository.deleteById(t.getTeamId());
+        return new ModelAndView("redirect:/home");
     }
 }

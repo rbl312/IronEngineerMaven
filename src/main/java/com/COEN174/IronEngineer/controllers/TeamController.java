@@ -108,22 +108,4 @@ public class TeamController {
         return new ModelAndView("redirect:/home");
     }
 
-    @RequestMapping(value = "/remove",method = RequestMethod.GET)
-    public ModelAndView removeTeam(Principal principal){
-
-        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
-        String userEmail = (String) details.get("email");
-
-        Competitor c = competitorRepository.findByEmail(userEmail);
-        Team t = teamRepository.findByTeamId(c.getTeamIdFK());
-
-        for(Competitor comp :t.getCompetitors()){
-            t.removeTeamMember(comp);
-            comp.setTeamIdFK(null);
-            competitorRepository.save(comp);
-        }
-        teamRepository.deleteById(t.getTeamId());
-        return new ModelAndView("redirect:/home");
-    }
-
 }
