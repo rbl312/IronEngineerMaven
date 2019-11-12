@@ -37,6 +37,8 @@ public class Team {
 
     public Team(String teamName, Competitor competitor) {
         this.teamName = teamName;
+        this.size=0;
+        this.approved=0;
         this.competitors = new HashSet<>();
         this.competitors.add(competitor);
     }

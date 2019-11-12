@@ -100,6 +100,7 @@ public class TeamController {
 
         newTeam.addTeamMember(competitor);
         newTeam.setSize(1);
+        newTeam.setApproved(0);
         teamRepository.save(newTeam);
         System.out.println(newTeam.getTeamId());
         competitor.setTeamIdFK(newTeam.getTeamId());

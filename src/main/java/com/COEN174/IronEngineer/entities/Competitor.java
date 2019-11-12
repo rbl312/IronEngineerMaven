@@ -25,6 +25,9 @@ public class Competitor {
     @Column(name = "team_id")
     private Integer teamIdFK;
 
+    @Column(name = "admin")
+    private Integer admin;
+
     /** All distance values stored in miles */
 
     @Column(name = "distance_ran")

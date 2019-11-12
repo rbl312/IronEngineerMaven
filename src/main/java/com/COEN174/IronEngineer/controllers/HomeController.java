@@ -36,7 +36,9 @@ public class HomeController {
         String userEmail =  (String) details.get("email");
 
         Competitor user = competitorRepository.findByEmail(userEmail);
-
+        if(user.getAdmin() == 1){
+            return new ModelAndView("redirect:/admin");
+        }
         //User is not in the database redirect them to the registration
         if(user == null){
             return new ModelAndView("redirect:/register");
@@ -48,11 +50,11 @@ public class HomeController {
         //This should be a value of User / Participant
         //Would probably look more like if(user.getTeamId() == null) etc..
         boolean isOnTeam =  userTeam != null;
-
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("name", userName);
         modelAndView.addObject("isOnTeam", isOnTeam);
         modelAndView.addObject("userTeam", userTeam);
+        modelAndView.addObject("isApproved", userTeam.getApproved());
         return modelAndView;
     }
 }

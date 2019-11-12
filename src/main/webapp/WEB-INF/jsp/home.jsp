@@ -13,7 +13,19 @@
             <a href="/team/create">Create a team</a>
         </c:when>
         <c:otherwise>
-            Team: <c:out value = "${userTeam.teamName}"/> </br>
+            Team: <c:out value = "${userTeam.teamName}"/>
+            <c:choose>
+                <c:when test="${isApproved != 1}">
+                    </br>
+                    <font color="red">    NAME NOT APPROVED</font>
+                </c:when>
+                <c:otherwise>
+                    </br>
+                    <font color="green">    NAME APPROVED</font>
+                </c:otherwise>
+            </c:choose>
+            </br>
+
             Distance Swam: <c:out value = "${userTeam.distanceSwam}"/> </br>
             Distance Biked: <c:out value = "${userTeam.distanceBiked}"/> </br>
             Distance Ran: <c:out value = "${userTeam.distanceRan}"/> </br>
