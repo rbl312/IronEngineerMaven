@@ -31,17 +31,41 @@ public class AdminController {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String userName = (String) details.get("name");
         String userEmail =  (String) details.get("email");
-
         Competitor user = competitorRepository.findByEmail(userEmail);
         if(user.getAdmin() == 0){
             return new ModelAndView("redirect:/home");
         }
+
         ModelAndView modelAndView = new ModelAndView("admin");
         modelAndView.addObject("name", userName);
         modelAndView.addObject("isAdmin", user.getAdmin());
         return modelAndView;
 
     }
+
+    @RequestMapping(value = "/allteam", method = RequestMethod.GET)
+    public ModelAndView showAllTeams(Principal principal){
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String userName = (String) details.get("name");
+        String userEmail =  (String) details.get("email");
+        Competitor user = competitorRepository.findByEmail(userEmail);
+        if(user.getAdmin() == 0){
+            return new ModelAndView("redirect:/home");
+        }
+
+        ModelAndView modelAndView = new ModelAndView("admin");
+
+        //TODO: add more metrics for team? distances, team members, etc
+
+        for(Team t: teamRepository.findAll()){
+            modelAndView.addObject("teamName",t.getTeamName());
+            modelAndView.addObject("teamSize",t.getSize());
+            modelAndView.addObject("teamApproval",t.getApproved());
+        }
+
+        return modelAndView;
+    }
+
     @RequestMapping("/approve")
     public ModelAndView approveTeam(){
         ModelAndView modelAndView = new ModelAndView("approveTeam");

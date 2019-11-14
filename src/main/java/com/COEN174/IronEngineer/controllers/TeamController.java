@@ -41,8 +41,10 @@ public class TeamController {
         Iterable<Team> teams= teamRepository.findAll();
         List<Team> joinableTeams = new ArrayList<>();
         for (Team team : teams) {
-            if(team.getCompetitors().size()<3)
-                joinableTeams.add(team);
+            if(team.getApproved() == 1) {
+                if (team.getCompetitors().size() < 3)
+                    joinableTeams.add(team);
+            }
         }
 
         modelAndView.addObject("joinableTeams", joinableTeams);
