@@ -103,7 +103,7 @@ public class AdminController {
         return new ModelAndView("redirect:/admin/approve");
     }
 
-    @RequestMapping(value = "/remove/{team_id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/remove/team/{team_id}",method = RequestMethod.GET)
     public ModelAndView removeTeam(@PathVariable("team_id") Integer team_id,Principal principal){
 
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
@@ -123,6 +123,32 @@ public class AdminController {
         }
         teamRepository.deleteById(t.getTeamId());
         return new ModelAndView("redirect:/home");
+    }
+
+    @RequestMapping(value = "/remove/competitor/{competitor_id}",method = RequestMethod.GET)
+    public ModelAndView removeCompetitor(@PathVariable("competitor_id") Integer competitor_id,Principal principal){
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        Competitor c;
+
+        if(competitorRepository.findById(competitor_id).isPresent()){
+            c = competitorRepository.findById(competitor_id).get();
+        }
+        else{
+            //TODO: return an erroR page here
+            return new ModelAndView("redirect:/home");
+        }
+        if(c.getAdmin()==1){
+            //todo: cant deelte admin error page
+            return new ModelAndView("redirect:/home");
+        }
+        if(c.getTeamIdFK()!=null){
+            Team team = teamRepository.findByTeamId(c.getTeamIdFK());
+            team.removeTeamMember(c);
+        }
+        competitorRepository.delete(c);
+
+        return new ModelAndView("redirect:/home");
+
     }
 
 }
