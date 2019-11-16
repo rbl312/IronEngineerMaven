@@ -7,6 +7,7 @@ import com.COEN174.IronEngineer.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -53,19 +55,20 @@ public class AdminController {
             return new ModelAndView("redirect:/home");
         }
 
-        ModelAndView modelAndView = new ModelAndView("admin");
+        Iterable<Team> teams = teamRepository.findAll();
+        ModelAndView modelAndView = new ModelAndView("allTeams");
+        List<Team> joinableTeams = new ArrayList<>();
 
-        //TODO: add more metrics for team? distances, team members, etc
-
-        for(Team t: teamRepository.findAll()){
-            modelAndView.addObject("teamName",t.getTeamName());
-            modelAndView.addObject("teamSize",t.getSize());
-            modelAndView.addObject("teamApproval",t.getApproved());
+        for (Team team : teams) {
+            if(team.getApproved() == 1) {
+                if (team.getCompetitors().size() < 3)
+                    joinableTeams.add(team);
+            }
         }
 
+        modelAndView.addObject("joinableTeams", joinableTeams);
         return modelAndView;
     }
-
     @RequestMapping("/approve")
     public ModelAndView approveTeam(){
         ModelAndView modelAndView = new ModelAndView("approveTeam");
@@ -121,4 +124,5 @@ public class AdminController {
         teamRepository.deleteById(t.getTeamId());
         return new ModelAndView("redirect:/home");
     }
+
 }
