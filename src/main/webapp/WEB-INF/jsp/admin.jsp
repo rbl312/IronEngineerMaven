@@ -10,7 +10,7 @@
 <c:choose>
     <c:when test="${isAdmin == 1}">
         <a href="/admin/approve">Approve team names</a> <br />
-        <a href="/admin/allteam">View All Team Progress</a>
+        <a href="/admin/team/view">View All Team Progress</a>
     </c:when>
     <c:otherwise>
         Team: <c:out value = "${userTeam.teamName}"/> </br>

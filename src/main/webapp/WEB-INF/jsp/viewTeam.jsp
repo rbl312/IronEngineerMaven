@@ -6,9 +6,9 @@
 
 <body>
 <a href="/admin">Home</a> <br />
-<h2> Team names to approve!</h2>
-<c:forEach items="${approveTeams}" var="team">
-    <c:out value= "${team.teamName}" /> <a href="/admin/approve/${team.teamId}">Approve this team name</a>
+<h2> All Teams!</h2>
+<c:forEach items="${viewTeam}" var="team">
+    <c:out value= "${team.teamName}" /> <a href="/admin/team/view/${team.teamId}">View Team Members</a>
     </br>
 </c:forEach>
 

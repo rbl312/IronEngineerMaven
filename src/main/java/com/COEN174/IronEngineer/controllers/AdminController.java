@@ -15,6 +15,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class AdminController {
@@ -73,4 +74,32 @@ public class AdminController {
         //redirect to home page
         return new ModelAndView("redirect:/admin/approve");
     }
+
+    @RequestMapping(value = "/admin/team/view")
+    public ModelAndView viewTeam(){
+        ModelAndView modelAndView = new ModelAndView("viewTeam");
+
+        Iterable<Team> teams = teamRepository.findAll();
+        List<Team> allTeams = new ArrayList<>();
+        for(Team team : teams){
+            allTeams.add(team);
+        }
+        modelAndView.addObject("viewTeam", allTeams);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/admin/team/view/{teamId}")
+    public ModelAndView viewTeamMembers(@PathVariable("teamId") Integer teamId){
+        ModelAndView modelAndView = new ModelAndView("viewTeamMembers");
+
+        Team chosenTeam = teamRepository.findByTeamId(teamId);
+        List<Competitor> allMembers = new ArrayList<>();
+        for(Competitor competitor : chosenTeam.getCompetitors()){
+            allMembers.add(competitor);
+        }
+        modelAndView.addObject("viewTeamMembers", allMembers);
+        return modelAndView;
+    }
+
 }
