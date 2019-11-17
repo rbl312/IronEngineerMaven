@@ -17,9 +17,13 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 @Controller
 public class LogController {
+
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     @Autowired
     private CompetitorRepository competitorRepository;
@@ -44,19 +48,12 @@ public class LogController {
 
         Competitor user = competitorRepository.findByEmail(userEmail);
         if(user == null){
-            System.out.println("NULLLLL !!!!!!! D:D:D:D");
+            LOGGER.log(Level.WARNING, "Unable to find Competitor in Database, redirecting to home");
             return new ModelAndView("redirect:/home");
         }
         if(newLog == null) {
-            System.out.println("NEW LOG IS NULL");
+            LOGGER.log(Level.WARNING, "Training Log is null");
         }
-        System.out.println(newLog.getDistanceBiked());
-        System.out.println(newLog.getDistanceRan());
-        System.out.println(newLog.getDistanceSwam());
-        System.out.println("USER STUFF");
-        System.out.println(user.getDistanceBiked());
-        System.out.println(user.getDistanceRan());
-        System.out.println(user.getDistanceSwam());
 
         user.setDistanceRan(user.getDistanceRan()+newLog.getDistanceRan());
         user.setDistanceBiked(user.getDistanceBiked()+newLog.getDistanceBiked());

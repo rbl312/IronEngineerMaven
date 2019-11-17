@@ -35,13 +35,13 @@ public class AdminController {
         String userName = (String) details.get("name");
         String userEmail =  (String) details.get("email");
         Competitor user = competitorRepository.findByEmail(userEmail);
-        if(user.getAdmin() == 0){
+        if(user.getIsAdmin() == true){
             return new ModelAndView("redirect:/home");
         }
 
         ModelAndView modelAndView = new ModelAndView("admin");
         modelAndView.addObject("name", userName);
-        modelAndView.addObject("isAdmin", user.getAdmin());
+        modelAndView.addObject("isAdmin", user.getIsAdmin());
         return modelAndView;
 
     }
@@ -52,7 +52,7 @@ public class AdminController {
         String userName = (String) details.get("name");
         String userEmail =  (String) details.get("email");
         Competitor user = competitorRepository.findByEmail(userEmail);
-        if(user.getAdmin() == 0){
+        if(user.getIsAdmin() != true){
             return new ModelAndView("redirect:/home");
         }
 
@@ -97,7 +97,7 @@ public class AdminController {
         String userName = (String) details.get("name");
         String userEmail =  (String) details.get("email");
         Competitor c = competitorRepository.findByEmail(userEmail);
-        if(c.getAdmin() == 0){
+        if(c.getIsAdmin() != true){
             return new ModelAndView("redirect:/home");
         }
 
@@ -143,7 +143,7 @@ public class AdminController {
         String userName = (String) details.get("name");
         String userEmail =  (String) details.get("email");
         Competitor c = competitorRepository.findByEmail(userEmail);
-        if(c.getAdmin() == 0){
+        if(c.getIsAdmin() != true){
             return new ModelAndView("redirect:/home");
         }
 
@@ -170,7 +170,7 @@ public class AdminController {
             //TODO: return an erroR page here
             return new ModelAndView("redirect:/home");
         }
-        if(c.getAdmin()==1){
+        if(c.getIsAdmin() == true){
             //todo: cant deelte admin error page
             return new ModelAndView("redirect:/home");
         }

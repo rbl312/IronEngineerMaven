@@ -23,7 +23,6 @@ public class RegisterController {
     @RequestMapping("/register")
     public ModelAndView regview(Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
-        Map<String, String> map = new LinkedHashMap<>();
         String userName =  (String) details.get("name");
         String userEmail = (String) details.get("email");
 

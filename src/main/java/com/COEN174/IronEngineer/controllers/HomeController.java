@@ -28,8 +28,7 @@ public class HomeController {
     @RequestMapping("/home")
     public ModelAndView homeView(Principal principal) {
 
-        //This variable should come from the logged in user
-        //i.e. userContext from Google Sign on
+        //Get User information from Google Sign on
 
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String userName = (String) details.get("name");
@@ -44,7 +43,8 @@ public class HomeController {
         if(user == null){
             return new ModelAndView("redirect:/register");
         }
-        if(user.getAdmin() == 1){
+        //by checking if it is true we also check to make sure it is not null
+        if(user.getIsAdmin() == true){
             return new ModelAndView("redirect:/admin/home");
         }
 

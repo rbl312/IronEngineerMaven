@@ -25,8 +25,8 @@ public class Competitor {
     @Column(name = "team_id")
     private Integer teamIdFK;
 
-    @Column(name = "admin")
-    private Integer admin;
+    @Column(name = "is_admin")
+    private Boolean isAdmin;
 
     /** All distance values stored in miles */
 
@@ -45,11 +45,10 @@ public class Competitor {
         this.distanceRan = 0.0f;
         this.distanceBiked = 0.0f;
         this.distanceSwam = 0.0f;
+        this.isAdmin = false;
     }
 
-    public Competitor(){
-        this.setAdmin(0);
-    }
+    public Competitor(){}
 
     public float getDistanceRan(){
         if(distanceRan == null)
@@ -66,8 +65,4 @@ public class Competitor {
             return 0.0f;
         return distanceSwam;
     }
-//    public boolean isOnTeam(){
-//        if()
-//    }
-
 }
