@@ -104,7 +104,7 @@ public class AdminController {
         return new ModelAndView("redirect:/admin/approve");
     }
 
-    @RequestMapping(value = "/admin/team/view")
+    @RequestMapping(value = "/team/view")
     public ModelAndView viewTeam(){
         ModelAndView modelAndView = new ModelAndView("viewTeam");
 
@@ -118,7 +118,7 @@ public class AdminController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/admin/team/view/{teamId}")
+    @RequestMapping(value = "/team/view/{teamId}")
     public ModelAndView viewTeamMembers(@PathVariable("teamId") Integer teamId) {
         ModelAndView modelAndView = new ModelAndView("viewTeamMembers");
 
