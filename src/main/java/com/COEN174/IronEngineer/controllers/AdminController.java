@@ -119,16 +119,17 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admin/team/view/{teamId}")
-    public ModelAndView viewTeamMembers(@PathVariable("teamId") Integer teamId){
+    public ModelAndView viewTeamMembers(@PathVariable("teamId") Integer teamId) {
         ModelAndView modelAndView = new ModelAndView("viewTeamMembers");
 
         Team chosenTeam = teamRepository.findByTeamId(teamId);
         List<Competitor> allMembers = new ArrayList<>();
-        for(Competitor competitor : chosenTeam.getCompetitors()){
+        for (Competitor competitor : chosenTeam.getCompetitors()) {
             allMembers.add(competitor);
         }
         modelAndView.addObject("viewTeamMembers", allMembers);
         return modelAndView;
+    }
     @RequestMapping(value = "/remove/team/{team_id}",method = RequestMethod.GET)
     public ModelAndView removeTeam(@PathVariable("team_id") Integer team_id,Principal principal){
 
