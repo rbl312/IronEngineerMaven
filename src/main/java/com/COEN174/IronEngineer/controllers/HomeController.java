@@ -39,12 +39,13 @@ public class HomeController {
 
 
         Competitor user = competitorRepository.findByEmail(userEmail);
-        if(user.getAdmin() == 1){
-            return new ModelAndView("redirect:/admin/home");
-        }
+
         //User is not in the database redirect them to the registration
         if(user == null){
             return new ModelAndView("redirect:/register");
+        }
+        if(user.getAdmin() == 1){
+            return new ModelAndView("redirect:/admin/home");
         }
 
         Team userTeam = teamRepository.findByTeamId(user.getTeamIdFK());
