@@ -132,6 +132,7 @@ public class AdminController {
         for (Competitor competitor : chosenTeam.getCompetitors()) {
             allMembers.add(competitor);
         }
+        modelAndView.addObject("team",chosenTeam);
         modelAndView.addObject("viewTeamMembers", allMembers);
         return modelAndView;
     }
@@ -154,11 +155,11 @@ public class AdminController {
             competitorRepository.save(comp);
         }
         teamRepository.deleteById(t.getTeamId());
-        return new ModelAndView("redirect:/home");
+        return new ModelAndView("redirect:/admin/team/view");
     }
 
-    @RequestMapping(value = "/remove/competitor/{competitor_id}",method = RequestMethod.GET)
-    public ModelAndView removeCompetitor(@PathVariable("competitor_id") Integer competitor_id,Principal principal){
+    @RequestMapping(value = "/delete/competitor/{competitor_id}",method = RequestMethod.GET)
+    public ModelAndView deleteCompetitor(@PathVariable("competitor_id") Integer competitor_id,Principal principal){
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         Competitor c;
 
@@ -179,7 +180,32 @@ public class AdminController {
         }
         competitorRepository.delete(c);
 
-        return new ModelAndView("redirect:/home");
+        return new ModelAndView("redirect:/admin/team/view");
+
+    }
+
+    @RequestMapping(value = "/team/remove/competitor/{competitor_id}",method = RequestMethod.GET)
+    public ModelAndView removeCompetitor(@PathVariable("competitor_id") Integer competitor_id,Principal principal){
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        Competitor c;
+
+        if(competitorRepository.findById(competitor_id).isPresent()){
+            c = competitorRepository.findById(competitor_id).get();
+        }
+        else{
+            //TODO: return an erroR page here
+            return new ModelAndView("redirect:/home");
+        }
+        if(c.getTeamIdFK()!=null){
+            Team team = teamRepository.findByTeamId(c.getTeamIdFK());
+            team.removeTeamMember(c);
+            c.setTeamIdFK(null);
+            teamRepository.save(team);
+        }
+
+        competitorRepository.save(c);
+
+        return new ModelAndView("redirect:/admin/team/view");
 
     }
 

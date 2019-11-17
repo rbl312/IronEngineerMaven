@@ -10,9 +10,8 @@
 <c:forEach items="${approvedTeams}" var="team">
     Team Name:<c:out value= "${team.teamName}" />
     Team Size:<c:out value="${team.size}" />
-    <a href="/team/join/${team.teamId}">Edit this team</a>
-    <a href="/admin/remove/team/${team.teamId}">Delete Team</a>
-    </br>
+    <a href="/admin/team/view/${team.teamId}">View Team</a>
+<%--    <a href="/admin/remove/team/${team.teamId}">Delete Team</a>--%>
 </c:forEach>
 <br>
 <h2>Unapproved Teams</h2>
@@ -20,8 +19,8 @@
 <c:forEach items ="${unapprovedTeams}" var="team">
     Team Name:<c:out value="${team.teamName}" />
     Team Size:<c:out value="${team.size}" />
-    <a href="/team/join/${team.teamId}">Edit Team</a>
-    <a href="/admin/remove/team/${team.teamId}">Delete Team</a>
+    <a href="/admin/team/view/${team.teamId}">View Team</a>
+<%--    <a href="/admin/remove/team/${team.teamId}">Delete Team</a>--%>
     <a href="/admin/approve/${team.teamId}">Approve Team</a>
 </c:forEach>
 <br><br><br><br><br><br><br><br><br><br>
