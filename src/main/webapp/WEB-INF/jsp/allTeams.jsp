@@ -5,11 +5,26 @@
 </head>
 
 <body>
-<h2>All Teams</h2>
-<c:forEach items="${joinableTeams}" var="team">
-    <c:out value= "${team.teamName}" /> <a href="/team/join/${team.teamId}">Join this team</a>
-    <c:out value="${team.teamSize}" />
+<h2>Approved Teams</h2>
+
+<c:forEach items="${approvedTeams}" var="team">
+    Team Name:<c:out value= "${team.teamName}" />
+    Team Size:<c:out value="${team.size}" />
+    <a href="/team/join/${team.teamId}">Edit this team</a>
+    <a href="/admin/remove/team/${team.teamId}">Delete Team</a>
     </br>
 </c:forEach>
+<br>
+<h2>Unapproved Teams</h2>
+
+<c:forEach items ="${unapprovedTeams}" var="team">
+    Team Name:<c:out value="${team.teamName}" />
+    Team Size:<c:out value="${team.size}" />
+    <a href="/team/join/${team.teamId}">Edit Team</a>
+    <a href="/admin/remove/team/${team.teamId}">Delete Team</a>
+    <a href="/admin/approve/${team.teamId}">Approve Team</a>
+</c:forEach>
+<br><br><br><br><br><br><br><br><br><br>
+<a href="/home">Home page</a>
 </body>
 </html>

@@ -58,16 +58,21 @@ public class AdminController {
 
         Iterable<Team> teams = teamRepository.findAll();
         ModelAndView modelAndView = new ModelAndView("allTeams");
-        List<Team> joinableTeams = new ArrayList<>();
+        List<Team> approvedTeams = new ArrayList<>();
+        List<Team> unapprovedTeams = new ArrayList<>();
 
         for (Team team : teams) {
             if(team.getApproved() == 1) {
                 if (team.getCompetitors().size() < 3)
-                    joinableTeams.add(team);
+                    approvedTeams.add(team);
+            }
+            else{
+                unapprovedTeams.add(team);
             }
         }
 
-        modelAndView.addObject("joinableTeams", joinableTeams);
+        modelAndView.addObject("approvedTeams", approvedTeams);
+        modelAndView.addObject("unapprovedTeams",unapprovedTeams);
         return modelAndView;
     }
     @RequestMapping("/approve")
