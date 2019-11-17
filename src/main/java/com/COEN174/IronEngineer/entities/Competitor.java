@@ -47,7 +47,9 @@ public class Competitor {
         this.distanceSwam = 0.0f;
     }
 
-    public Competitor(){}
+    public Competitor(){
+        this.setAdmin(0);
+    }
 
     public float getDistanceRan(){
         if(distanceRan == null)
