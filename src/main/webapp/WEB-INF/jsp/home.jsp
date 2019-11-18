@@ -10,17 +10,21 @@
     <div class = "maintext">Welcome <c:out value= "${name}"/>!
     <c:choose>
         <c:when test="${not isOnTeam}">
-            <a href="/team/find">Join a team</a> <br />
-            <a href="/team/create">Create a team</a>
+            <form action="/team/find">
+                <button class = "button">Join a team</button>
+            </form>
+            <form action="/team/create">
+                <button class = "button">Create a team</button>
+            </form>
         </c:when>
         <c:otherwise>
             <c:choose>
                 <c:when test="${isApproved != 1}">
-                    Team: <c:out value = "${userTeam.teamName}"/>
+                    Team: Name waiting admin approval
                 </c:when>
                 <c:otherwise>
                     </br>
-                    Team: Name waiting admin approval
+                    Team: <c:out value = "${userTeam.teamName}"/>
                 </c:otherwise>
             </c:choose>
             </br>

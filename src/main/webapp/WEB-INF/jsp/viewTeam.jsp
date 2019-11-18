@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
-<link href="style.css" rel="stylesheet">
+<link href="/style.css" rel="stylesheet">
 <html>
 <head>
 </head>
