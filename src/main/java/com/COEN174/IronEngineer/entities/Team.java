@@ -77,8 +77,8 @@ public class Team {
     // Make this method generic so it can be reused for running and swimming
     public float getDistanceBiked(){
         if(competitors == null)
-            return 0;
-        int totalDistanceBiked = 0;
+            return 0.0f;
+        float totalDistanceBiked = 0;
         for (Competitor competitor : competitors) {
             totalDistanceBiked += competitor.getDistanceBiked();
         }
@@ -86,8 +86,8 @@ public class Team {
     }
     public float getDistanceRan(){
         if(competitors == null)
-            return 0;
-        int totalDistanceRan = 0;
+            return 0.0f;
+        float totalDistanceRan = 0;
         for (Competitor competitor: competitors) {
             totalDistanceRan += competitor.getDistanceRan();
         }
@@ -95,8 +95,8 @@ public class Team {
     }
     public float getDistanceSwam(){
         if(competitors == null)
-            return 0;
-        int totalDistanceSwam = 0;
+            return 0.0f;
+        float totalDistanceSwam = 0;
         for (Competitor competitor : competitors) {
             totalDistanceSwam += competitor.getDistanceSwam();
         }
