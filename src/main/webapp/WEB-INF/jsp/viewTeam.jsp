@@ -6,16 +6,14 @@
 </head>
 
 <body>
-<a href="/admin/home">Home</a> <br />
 <h2> All Teams!</h2>
 <c:forEach items="${viewTeam}" var="team">
-    <c:out value= "${team.teamName}" />
-    <c:out value="${team.size}"/>
-    <a href="/admin/team/view/${team.teamId}">View Team Members</a>
+    <form action="/admin/team/view/${team.teamId}">
+        Name: <c:out value= "${team.teamName}" />
+        Size: <c:out value="${team.size}"/>
+        <button class = "button">View this team</button>
+    </form>
     </br>
 </c:forEach>
-
-<a href="/home">Home Page</a>
-
 </body>
 </html>

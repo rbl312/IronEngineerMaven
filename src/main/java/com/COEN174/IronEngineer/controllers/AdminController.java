@@ -35,7 +35,7 @@ public class AdminController {
         String userName = (String) details.get("name");
         String userEmail =  (String) details.get("email");
         Competitor user = competitorRepository.findByEmail(userEmail);
-        if(user.getIsAdmin() == true){
+        if(user.getIsAdmin() != true){
             return new ModelAndView("redirect:/home");
         }
 
@@ -128,12 +128,7 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView("viewTeamMembers");
 
         Team chosenTeam = teamRepository.findByTeamId(teamId);
-        List<Competitor> allMembers = new ArrayList<>();
-        for (Competitor competitor : chosenTeam.getCompetitors()) {
-            allMembers.add(competitor);
-        }
-        modelAndView.addObject("team",chosenTeam);
-        modelAndView.addObject("viewTeamMembers", allMembers);
+        modelAndView.addObject("team", chosenTeam);
         return modelAndView;
     }
     @RequestMapping(value = "/remove/team/{team_id}",method = RequestMethod.GET)

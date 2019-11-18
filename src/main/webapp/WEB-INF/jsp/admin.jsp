@@ -9,16 +9,20 @@
 
 <div>Welcome <c:out value= "${name}"/>! </br>You are on Admin page! </br> </div>
 <c:choose>
-    <c:when test="${isAdmin == 1}">
-        <a href="/admin/approve">Approve team names</a> <br />
-        <a href="/admin/team/view">View All Team Progress</a>
+    <c:when test="${isAdmin}">
+        <form action="/admin/approve">
+            <button class = "button">Approve team names</button>
+        </form>
+        <form action="/admin/team/view">
+            <button class = "button">View All Team Progress</button>
+        </form>
     </c:when>
     <c:otherwise>
         Team: <c:out value = "${userTeam.teamName}"/> </br>
         Distance Swam: <c:out value = "${userTeam.distanceSwam}"/> </br>
         Distance Biked: <c:out value = "${userTeam.distanceBiked}"/> </br>
         Distance Ran: <c:out value = "${userTeam.distanceRan}"/> </br>
-        <form action="/log"">
+        <form action="/log">
             <button class = "button">Enter new race log</button>
         </form>
     </c:otherwise>

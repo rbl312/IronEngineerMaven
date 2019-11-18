@@ -6,14 +6,20 @@
 </head>
 
 <body>
-<h2> All Team Members!</h2>
-<c:forEach items="${viewTeamMembers}" var="competitor">
-    <c:out value= "${competitor.name}" /> ran:<c:out value= "${competitor.distanceRan}" /> swam:<c:out value= "${competitor.distanceSwam}" /> biked:<c:out value= "${competitor.distanceBiked}" />
-    <a href="/admin/team/remove/competitor/${competitor.competitorId}">Remove Team Member</a>
-    </br>
-</c:forEach>
-    <a href="/admin/remove/team/${team.teamId}">Delete Team</a>
+    <h2> Team members for <c:out value = "${team.teamName}" /></h2>
+    <c:forEach items="${team.competitors}" var="competitor">
+        <form action="/admin/team/remove/competitor/${competitor.competitorId}">
+            <c:out value= "${competitor.name}" />
+            Ran:<c:out value= "${competitor.distanceRan}" />
+            Swam:<c:out value= "${competitor.distanceSwam}" />
+            Biked:<c:out value= "${competitor.distanceBiked}" />
+            <button class = "button">Remove this member</button>
+        </form>
+        </br>
+    </c:forEach>
 
+    <form action="/admin/remove/team/${team.teamId}">
+        <button class = "button">Remove this team</button>
+    </form>
 </body>
-<a href="/home">Home Page</a>
 </html>

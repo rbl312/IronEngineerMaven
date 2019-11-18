@@ -6,15 +6,13 @@
 </head>
 
 <body>
-<a href="/admin">Home</a> <br />
 <h2> Team names to approve!</h2>
 <c:forEach items="${approveTeams}" var="team">
-    <c:out value= "${team.teamName}" />
-    <form action="/admin/approve/${team.teamId}"">
+    <form action="/admin/approve/${team.teamId}">
+        <c:out value= "${team.teamName}" />
         <button class = "button">Approve this team name</button>
     </form>
     </br>
 </c:forEach>
-
 </body>
 </html>

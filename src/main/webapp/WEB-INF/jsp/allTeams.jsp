@@ -30,7 +30,5 @@
          <button class = "button">Approve Team</button>
      </form>
 </c:forEach>
-<br><br><br><br><br><br><br><br><br><br>
-<a href="/home">Home page</a>
 </body>
 </html>
