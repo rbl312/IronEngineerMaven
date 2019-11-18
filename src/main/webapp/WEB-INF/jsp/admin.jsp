@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<link href="style.css" rel="stylesheet">
 <html>
 <head>
 </head>
@@ -17,7 +18,9 @@
         Distance Swam: <c:out value = "${userTeam.distanceSwam}"/> </br>
         Distance Biked: <c:out value = "${userTeam.distanceBiked}"/> </br>
         Distance Ran: <c:out value = "${userTeam.distanceRan}"/> </br>
-        <a href="/log">Enter new race log</a>
+        <form action="/log"">
+            <button class = "button">Enter new race log</button>
+        </form>
     </c:otherwise>
 </c:choose>
 </body>
