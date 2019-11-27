@@ -39,8 +39,8 @@ public class LogController {
 
     @RequestMapping(value = "/addLog", method = RequestMethod.POST)
     public ModelAndView addLog(@Valid @ModelAttribute("newLog")Log newLog, BindingResult result, ModelMap model, Principal principal){
-        //Add new team to database
-        //We should have this user Id from their user context when theyre logged in
+
+
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         Map<String, String> map = new LinkedHashMap<>();
         String userName =  (String) details.get("name");
@@ -53,6 +53,13 @@ public class LogController {
         }
         if(newLog == null) {
             LOGGER.log(Level.WARNING, "Training Log is null");
+            return new ModelAndView("redirect:/log");
+        }
+
+        //Check to make sure integrity box is checked
+        //If not redirect the user back to the log
+        if(!newLog.isIntegrityChecked()){
+            return new ModelAndView("redirect:/log");
         }
 
         user.setDistanceRan(user.getDistanceRan()+newLog.getDistanceRan());
