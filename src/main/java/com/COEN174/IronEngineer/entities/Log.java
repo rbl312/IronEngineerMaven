@@ -9,6 +9,7 @@ public class Log{
     private Float distanceSwam;
     private Float distanceBiked;
     private Float distanceRan;
+    private Boolean integrityCheckbox;
 
     public Log(){}
 }
