@@ -18,6 +18,9 @@
             </form>
         </c:when>
         <c:otherwise>
+            <form action="/logout">
+                <button class = "button">Logout</button>
+            </form>
             <c:choose>
                 <c:when test="${isApproved != 1}">
                     Team: Name waiting admin approval

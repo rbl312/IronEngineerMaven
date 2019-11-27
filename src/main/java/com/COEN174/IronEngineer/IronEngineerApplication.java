@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-@EnableOAuth2Sso
+
 @SpringBootApplication
 public class IronEngineerApplication extends SpringBootServletInitializer{
 
@@ -14,6 +14,7 @@ public class IronEngineerApplication extends SpringBootServletInitializer{
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(IronEngineerApplication.class);
 	}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(IronEngineerApplication.class, args);

@@ -70,4 +70,6 @@ public class HomeController {
             modelAndView.addObject("isApproved", userTeam.getApproved());
         return modelAndView;
     }
+
+
 }
