@@ -64,7 +64,7 @@ public class Team {
         }
         else{
             this.competitors.remove(competitor);
-            this.size--;
+//            this.size--;
             return true;
         }
     }

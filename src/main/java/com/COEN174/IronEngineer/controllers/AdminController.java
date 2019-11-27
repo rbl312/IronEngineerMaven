@@ -8,11 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -180,7 +184,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/team/remove/competitor/{competitor_id}",method = RequestMethod.GET)
-    public ModelAndView removeCompetitor(@PathVariable("competitor_id") Integer competitor_id,Principal principal){
+    public ModelAndView removeCompetitor(@PathVariable("competitor_id") Integer competitor_id, BindingResult result,Principal principal){
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         Competitor c;
 
@@ -203,5 +207,43 @@ public class AdminController {
         return new ModelAndView("redirect:/admin/team/view");
 
     }
+
+    @RequestMapping(value="/addadmin",method = RequestMethod.GET)
+    public ModelAndView addAdmins(){
+        ModelAndView modelAndView = new ModelAndView("addAdmin");
+        modelAndView.addObject("newAdmin",new Competitor());
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/addadmin/promote", method = RequestMethod.POST)
+    public ModelAndView addAdmin(@Valid @ModelAttribute("newAdmin") Competitor newAdmin, ModelMap model, Principal principal){
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String adminEmail = (String) details.get("email");
+        String userEmail = newAdmin.getEmail();
+        Competitor admin = competitorRepository.findByEmail(adminEmail);
+
+        if(admin.getIsAdmin() != true){
+            return new ModelAndView("redirect:/home");
+        }
+
+        Competitor promotedAdmin = competitorRepository.findByEmail(userEmail);
+
+        if(promotedAdmin == null) {
+            return new ModelAndView("redirect:/home");
+        }
+
+        if(promotedAdmin.getTeamIdFK() != null){
+            Team t = teamRepository.findByTeamId(promotedAdmin.getTeamIdFK());
+            t.removeTeamMember(promotedAdmin);
+            teamRepository.save(t);
+        }
+
+        promotedAdmin.setIsAdmin(true);
+        competitorRepository.save(promotedAdmin);
+
+        return new ModelAndView("redirect:/admin/addadmin");
+    }
+
 
 }

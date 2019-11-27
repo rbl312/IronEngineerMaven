@@ -16,6 +16,12 @@
         <form action="/admin/team/view">
             <button class = "button">View All Team Progress</button>
         </form>
+        <form action="/admin/addadmin">
+            <button class = "button">Promote Users to Admin</button>
+        </form>
+        <form action="/logout">
+            <button class = "button">Logout</button>
+        </form>
     </c:when>
     <c:otherwise>
         Team: <c:out value = "${userTeam.teamName}"/> </br>
