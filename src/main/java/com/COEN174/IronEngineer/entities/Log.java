@@ -6,10 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Log{
-    private Float distanceSwam;
-    private Float distanceBiked;
-    private Float distanceRan;
-    private Boolean integrityCheckbox;
+    private float distanceSwam;
+    private float distanceBiked;
+    private float distanceRan;
+    private boolean integrityChecked;
 
     public Log(){}
 }

@@ -24,7 +24,7 @@
                         <td><form:input path="distanceRan"/></td>
                     </tr>
                     <tr>
-                        <td><form:checkbox path="integrityCheckbox"/>
+                        <td><form:checkbox path="integrityChecked"/>
                         By checking this box you certify that you completed the distances specified during the race period
                         </td>
                     </tr>

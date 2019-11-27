@@ -58,7 +58,7 @@ public class LogController {
 
         //Check to make sure integrity box is checked
         //If not redirect the user back to the log
-        if(!newLog.getIntegrityCheckbox()){
+        if(!newLog.isIntegrityChecked()){
             return new ModelAndView("redirect:/log");
         }
 
