@@ -72,7 +72,6 @@ public class TeamController {
         }
         
         t.addTeamMember(c);
-        t.setSize(t.getSize()+1);
         teamRepository.save(t);
 
         c.setTeamIdFK(t.getTeamId());
@@ -101,7 +100,6 @@ public class TeamController {
         Competitor competitor = competitorRepository.findByEmail(userEmail);
 
         newTeam.addTeamMember(competitor);
-        newTeam.setSize(1);
         newTeam.setApproved(0);
         teamRepository.save(newTeam);
         System.out.println(newTeam.getTeamId());
