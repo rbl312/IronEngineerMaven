@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
-<link href="style.css" rel="stylesheet">
 <link href="bootstrap.css" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
 <html>
 <head>
 </head>
 
 <body>
-    <div class = "maintext">
-        <div class="jumbotron text-center">
+        <div class="jumbotron text-center ">
             Welcome <c:out value= "${name}"/>!
             </br>
             <c:choose>
@@ -20,7 +19,6 @@
                 </c:otherwise>
             </c:choose>
         </div>
-
         <div class="container">
                 <div class="row">
                     <div class="col-sm">
@@ -79,6 +77,5 @@
                     </div>
                 </div>
         </div>
-    </div>
 </body>
 </html>
