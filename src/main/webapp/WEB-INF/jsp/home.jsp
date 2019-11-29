@@ -25,15 +25,43 @@
                 <div class="row">
                     <div class="col-sm">
                       <h4>Distance Swam:</h4>
-                      <p><c:out value = "${userTeam.distanceSwam}"/> Miles / 2.0 Miles</p>
+                      <p><c:out value = "${userTeam.distanceSwam}"/> Miles / 2.0 Miles <br>
+                          <c:choose>
+                              <c:when test = "${userTeam.distanceSwam >= 2.4}">
+                                  You have completed for task for swimming! <br>
+                              </c:when>
+                              <c:otherwise>
+                                  </br>
+                              </c:otherwise>
+                          </c:choose>
+
+                      </p>
                     </div>
                     <div class="col-sm">
                       <h4>Distance Biked:</h4>
-                      <p><c:out value = "${userTeam.distanceBiked}"/> Miles / 112.0 Miles</p>
+                      <p><c:out value = "${userTeam.distanceBiked}"/> Miles / 112.0 Miles <br>
+                          <c:choose>
+                              <c:when test = "${userTeam.distanceBiked >= 112.0}">
+                                  You have completed for task for biking! <br>
+                              </c:when>
+                              <c:otherwise>
+                                  </br>
+                              </c:otherwise>
+                          </c:choose>
+                      </p>
                     </div>
                     <div class="col-sm">
                       <h4>Distance Ran:</h4>
-                      <p><c:out value = "${userTeam.distanceRan}"/> Miles / 26.0 Miles</p>
+                      <p><c:out value = "${userTeam.distanceRan}"/> Miles / 26.0 Miles <br>
+                          <c:choose>
+                              <c:when test = "${userTeam.distanceRan >= 26.0}">
+                                  You have completed for task for running! <br>
+                              </c:when>
+                              <c:otherwise>
+                                  </br>
+                              </c:otherwise>
+                          </c:choose>
+                      </p>
                     </div>
                 </div>
                 <div class="row text-center">
