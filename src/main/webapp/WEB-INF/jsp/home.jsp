@@ -26,7 +26,7 @@
                       <p><c:out value = "${userTeam.distanceSwam}"/> Miles / 2.0 Miles <br>
                           <c:choose>
                               <c:when test = "${userTeam.distanceSwam >= 2.4}">
-                                  You have completed for task for swimming! <br>
+                                  You have finished the swimming portion of the race! <br>
                               </c:when>
                               <c:otherwise>
                                   </br>
@@ -40,7 +40,7 @@
                       <p><c:out value = "${userTeam.distanceBiked}"/> Miles / 112.0 Miles <br>
                           <c:choose>
                               <c:when test = "${userTeam.distanceBiked >= 112.0}">
-                                  You have completed for task for biking! <br>
+                                  You have finished the biking portion of the race! <br>
                               </c:when>
                               <c:otherwise>
                                   </br>
@@ -53,7 +53,7 @@
                       <p><c:out value = "${userTeam.distanceRan}"/> Miles / 26.0 Miles <br>
                           <c:choose>
                               <c:when test = "${userTeam.distanceRan >= 26.0}">
-                                  You have completed for task for running! <br>
+                                  You have finished the running portion of the race! <br>
                               </c:when>
                               <c:otherwise>
                                   </br>
@@ -72,7 +72,7 @@
                 <div class="row text-center">
                     <div class="col">
                         <form action="/logout">
-                            <button type="button" class="btn btn-default btn-sm">Logout</button>
+                            <button class="button">Logout</button>
                         </form>
                     </div>
                 </div>
