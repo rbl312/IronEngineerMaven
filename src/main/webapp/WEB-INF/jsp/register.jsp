@@ -15,14 +15,14 @@
     <div class="row text-center">
         <div class="col">
             <form action="/team/find">
-                <button type="button" class="button">Join a team</button>
+                <button class="button">Join a team</button>
             </form>
         </div>
     </div>
     <div class="row text-center">
         <div class="col">
             <form action="/team/create">
-                <button type="button" class="button">Create a team</button>
+                <button class="button">Create a team</button>
             </form>
         </div>
     </div>
