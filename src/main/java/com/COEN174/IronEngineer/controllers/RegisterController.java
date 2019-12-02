@@ -20,11 +20,11 @@ public class RegisterController {
     @Autowired
     private CompetitorRepository competitorRepository;
 
-    // Function Name:
-    // Parameters:
-    // Expected Result:
-    // Description:
-    // Notes:
+    // Function Name: regview
+    // Parameters: principal (Principal), used to handle user context.
+    // Expected Result: A user is registered to the competition and added to the Iron Engineer database as a competitor
+    // Description: User is registered as a competitor to the system and added to the Iron Engineer database.
+    // Notes: Registering is taken care of automatically when this endpoint is hit, does not require any user input.
     @RequestMapping("/register")
     public ModelAndView regview(Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
