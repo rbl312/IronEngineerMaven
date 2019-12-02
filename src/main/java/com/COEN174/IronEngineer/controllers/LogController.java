@@ -28,10 +28,11 @@ public class LogController {
     @Autowired
     private CompetitorRepository competitorRepository;
 
-    // Function Name:
-    // Parameters:
-    // Description:
-    // Notes:
+    // Function Name: enterLogView
+    // Parameters: None.
+    // Expected Result: A view for entering distances into a user's log is returned.
+    // Description: This function returns a view on the user's log that allows the user to update their distances completed for the competition.
+    // Notes: Works in conjunction with addLog
     @RequestMapping("/log")
     public ModelAndView enterLogView() {
 
@@ -41,10 +42,12 @@ public class LogController {
         return modelAndView;
     }
 
-    // Function Name:
-    // Parameters:
-    // Description:
-    // Notes:
+    // Function Name: addLog
+    // Parameters: newLog (Log), result (BindingResult), model (ModelMap), principal (Principal). newLog is a Log object used for updating competitors distances in the database.
+    // result, model, and principal are used to handle user context.
+    // Expected Result: a new log of distances is submitted to the database, updating a competitor's completed distances for the competition.
+    // Description: This function works in conjunction with enterLogView to display a log that users can use to update their distances completed.
+    // Notes: The distances are measured in miles, and may contain decimals.
     @RequestMapping(value = "/addLog", method = RequestMethod.POST)
     public ModelAndView addLog(@Valid @ModelAttribute("newLog")Log newLog, BindingResult result, ModelMap model, Principal principal){
 

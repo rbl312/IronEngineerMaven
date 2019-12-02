@@ -25,6 +25,13 @@
         </c:forEach>
     </div>
 </div>
+<div class= "row text-center">
+    <div class = "col">
+        <form action="/admin/home">
+            <button class="button">Home Page</button>
+        </form>
+    </div>
+</div>
 
 
 </body>

@@ -27,19 +27,20 @@ public class TeamController {
     @Autowired
     private CompetitorRepository competitorRepository;
 
-    // Function Name:
-    // Parameters:
-    // Description:
+    // Function Name: findAllTeams
+    // Parameters: None.
+    // Expected Result: Returns all valid teams registered in the system.
+    // Description: Returns all valid teams found in the Iron Engineer database.
     // Notes:
-    //Setup user context
     @GetMapping("/all")
     public @ResponseBody Iterable<Team> findAllTeams(){
         return teamRepository.findAll();
     }
 
-    // Function Name:
-    // Parameters:
-    // Description:
+    // Function Name: findTeam
+    // Parameters: None.
+    // Expected Result: Returns all approved and joinable teams.
+    // Description: Returns approved and joinable teams to be displayed to competitors looking to join a team.
     // Notes:
     @RequestMapping("/find")
     public ModelAndView findTeam(){
@@ -59,9 +60,10 @@ public class TeamController {
         return modelAndView;
     }
 
-    // Function Name:
-    // Parameters:
-    // Description:
+    // Function Name: joinTeam
+    // Parameters: teamId (Integer) and principal (Principal). teamId is the primary key used to identify a team in the Iron Engineer system and principal is used to handle user context.
+    // Expected Result: A competitor joins the given team and the addition is reflected in the Iron Engineer database.
+    // Description: A competitor is added to the team represented by teamId. The team and competitor information in the Iron Engineer database and system is modified to reflect the addition.
     // Notes:
     @RequestMapping(value = "/join/{teamId}")
     public ModelAndView joinTeam(@PathVariable("teamId") Integer teamId, Principal principal){
@@ -91,10 +93,11 @@ public class TeamController {
         return new ModelAndView("redirect:/home");
     }
 
-    // Function Name:
-    // Parameters:
-    // Description:
-    // Notes:
+    // Function Name: createTeam
+    // Parameters: None.
+    // Expected Result: An Iron Engineer team view is created and displayed to the user to create a new team.
+    // Description: A view for creating a new team is returned to the user. The user may use this view to name their team and register it to the Iron Engineer system.
+    // Notes: Works in conjunction with addTeam.
     @RequestMapping("/create")
     public ModelAndView createTeam(){
         ModelAndView modelAndView = new ModelAndView("create");
@@ -106,10 +109,12 @@ public class TeamController {
         return modelAndView;
     }
 
-    // Function Name:
-    // Parameters:
-    // Description:
-    // Notes:
+    // Function Name: addTeam
+    // Parameters: newTeam (Team), result (BindingResult), model (ModelMap), principal (Principal). newTeam is a Team object that is used to collect and store team information. result, model, and principal are used
+    // to handle user context.
+    // Expected Result: A new team is created and added to the Iron Engineer database and system.
+    // Description: A new team is created and added to the database, with the included details that the competitor has entered such as team name.
+    // Notes: When a team is initially created it is set to unapproved. Unapproved teams are not publicly displayed until approved by an administrator.
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ModelAndView addTeam(@Valid @ModelAttribute("newTeam")Team newTeam, BindingResult result, ModelMap model, Principal principal){
 

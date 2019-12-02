@@ -9,7 +9,12 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-//@Table(name = "competitor")
+// Class Name: Competitor
+// Class Description: Competitor is the class used to store user information in the Iron Engineer system. All user information is stored within competitor objects including distances completed.
+// Class Attributes: competitorId (Integer) used to identify competitors in the Iron Engineer system, name (String) to store the competitors name, email (String) to store competitor's email,
+// teamIdFk (Integer) to store the identifying key for the team that a competitor is apart of, isAdmin (boolean) to used to differentiate between regular and administrative users.
+// All completed distances are store using Floats: distanceRan, distanceSwam, distanceBiked
+// Class Notes: This class corresponds to the Competitor table in the Iron Engineer database.
 public class Competitor {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

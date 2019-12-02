@@ -96,8 +96,16 @@ public class AdminController {
     // Expected Result: Unapproved teams are displayed to the administrator, allowing them to select a team to approve.
     // Notes: Selecting a team to approve will approve the team's name and register the team for the competition.
     @RequestMapping("/approve")
-    public ModelAndView approveTeam(){
+    public ModelAndView approveTeam(Principal principal){
         ModelAndView modelAndView = new ModelAndView("approveTeam");
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String userName = (String) details.get("name");
+        String userEmail =  (String) details.get("email");
+        Competitor c = competitorRepository.findByEmail(userEmail);
+        if(c.getIsAdmin() != true){
+            return new ModelAndView("redirect:/home");
+        }
+
 
         Iterable<Team> teams= teamRepository.findAll();
         List<Team> approveTeams = new ArrayList<>();
@@ -142,8 +150,16 @@ public class AdminController {
     // Description: Returns a list of all teams currently in the system, separated by approved and unapproved team names.
     // Notes: only admins may access this list. From this list administrator tools are available to modify a team as needed.
     @RequestMapping(value = "/team/view")
-    public ModelAndView viewTeam(){
+    public ModelAndView viewTeam(Principal principal){
         ModelAndView modelAndView = new ModelAndView("viewTeam");
+
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String userName = (String) details.get("name");
+        String userEmail =  (String) details.get("email");
+        Competitor c = competitorRepository.findByEmail(userEmail);
+        if(c.getIsAdmin() != true){
+            return new ModelAndView("redirect:/home");
+        }
 
         Iterable<Team> teams = teamRepository.findAll();
         List<Team> allTeams = new ArrayList<>();
@@ -161,8 +177,15 @@ public class AdminController {
     // Description: Returns the provided team object to be used in displaying the team mates in the model
     // Notes: Works in conjunction with viewTeam
     @RequestMapping(value = "/team/view/{teamId}")
-    public ModelAndView viewTeamMembers(@PathVariable("teamId") Integer teamId) {
+    public ModelAndView viewTeamMembers(@PathVariable("teamId") Integer teamId, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("viewTeamMembers");
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String userName = (String) details.get("name");
+        String userEmail =  (String) details.get("email");
+        Competitor c = competitorRepository.findByEmail(userEmail);
+        if(c.getIsAdmin() != true){
+            return new ModelAndView("redirect:/home");
+        }
 
         Team chosenTeam = teamRepository.findByTeamId(teamId);
         modelAndView.addObject("team", chosenTeam);
@@ -195,37 +218,6 @@ public class AdminController {
         teamRepository.deleteById(t.getTeamId());
         return new ModelAndView("redirect:/admin/team/view");
     }
-
-//    // Function Name: deleteCompetitor
-//    // Parameters: competitorId (Integer) and principal (Principal). competitorId is the primary key used to identify a competitor and principal is used to handle user context.
-//    // Expected Result: The given competitor is deleted from the Iron Engineer database and competition.
-//    // Description: deletes a competitor from the Iron Engineer database and competition.
-//    // Notes: Administrator competitors cannot be deleted using this function. To delete an administrator direct database access is necessary.
-//    @RequestMapping(value = "/delete/competitor/{competitorId}",method = RequestMethod.GET)
-//    public ModelAndView deleteCompetitor(@PathVariable("competitorId") Integer competitorId,Principal principal){
-//        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
-//        Competitor c;
-//
-//        if(competitorRepository.findById(competitorId).isPresent()){
-//            c = competitorRepository.findById(competitorId).get();
-//        }
-//        else{
-//            //TODO: return an erroR page here
-//            return new ModelAndView("redirect:/home");
-//        }
-//        if(c.getIsAdmin() == true){
-//            //todo: cant deelte admin error page
-//            return new ModelAndView("redirect:/home");
-//        }
-//        if(c.getTeamIdFK()!=null){
-//            Team team = teamRepository.findByTeamId(c.getTeamIdFK());
-//            team.removeTeamMember(c);
-//        }
-//        competitorRepository.delete(c);
-//
-//        return new ModelAndView("redirect:/admin/team/view");
-//
-//    }
 
     // Function Name: removeCompetitor
     // Parameters: competitorId (Integer), result (BindingResult) and principal (Principal).
@@ -269,7 +261,16 @@ public class AdminController {
     // Description: Prepares the form used to promote a competitor to an administrator account.
     // Notes: Works in conjunction with addAdmin
     @RequestMapping(value="/addadmin",method = RequestMethod.GET)
-    public ModelAndView addAdmins(){
+    public ModelAndView addAdmins(Principal principal){
+
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String userName = (String) details.get("name");
+        String userEmail =  (String) details.get("email");
+        Competitor c = competitorRepository.findByEmail(userEmail);
+        if(c.getIsAdmin() != true){
+            return new ModelAndView("redirect:/home");
+        }
+
         ModelAndView modelAndView = new ModelAndView("addAdmin");
         modelAndView.addObject("newAdmin",new Competitor());
 

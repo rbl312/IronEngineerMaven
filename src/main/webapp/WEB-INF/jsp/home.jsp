@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col-sm">
                       <h4>Distance Swam:</h4>
-                      <p><c:out value = "${userTeam.distanceSwam}"/> Miles / 2.0 Miles <br>
+                      <p><c:out value = "${userTeam.distanceSwam}"/> Miles / 2.4 Miles <br>
                           <c:choose>
                               <c:when test = "${userTeam.distanceSwam >= 2.4}">
                                   You have finished the swimming portion of the race! <br>
@@ -50,9 +50,9 @@
                     </div>
                     <div class="col-sm">
                       <h4>Distance Ran:</h4>
-                      <p><c:out value = "${userTeam.distanceRan}"/> Miles / 26.0 Miles <br>
+                      <p><c:out value = "${userTeam.distanceRan}"/> Miles / 26.2 Miles <br>
                           <c:choose>
-                              <c:when test = "${userTeam.distanceRan >= 26.0}">
+                              <c:when test = "${userTeam.distanceRan >= 26.2}">
                                   You have finished the running portion of the race! <br>
                               </c:when>
                               <c:otherwise>
