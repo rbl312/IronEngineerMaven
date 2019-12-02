@@ -158,6 +158,7 @@ public class AdminController {
 
     // Function Name: viewTeamMembers
     // Parameters: teamId, representing the primary key of a team
+    // Expected Result: the team members of a given team are displayed in a view to the administrator
     // Description: Returns the provided team object to be used in displaying the team mates in the model
     // Notes: Works in conjunction with viewTeam
     @RequestMapping(value = "/team/view/{teamId}")
@@ -170,9 +171,10 @@ public class AdminController {
     }
 
     // Function Name: removeTeam
-    // Parameters: teamId
-    // Description:
-    // Notes:
+    // Parameters: teamId (Integer), representing the primary key of a team, and principal (Principal) to handle user context
+    // Expected Result: A team is removed from the Iron Engineer database and competition.
+    // Description: Removes a team from the Iron Engineer database and competition
+    // Notes: All users are removed from the deleted team
     @RequestMapping(value = "/remove/team/{teamId}",method = RequestMethod.GET)
     public ModelAndView removeTeam(@PathVariable("teamId") Integer teamId,Principal principal){
 
@@ -195,17 +197,51 @@ public class AdminController {
         return new ModelAndView("redirect:/admin/team/view");
     }
 
-    // Function Name:
-    // Parameters:
-    // Description:
-    // Notes:
-    @RequestMapping(value = "/delete/competitor/{competitor_id}",method = RequestMethod.GET)
-    public ModelAndView deleteCompetitor(@PathVariable("competitor_id") Integer competitor_id,Principal principal){
+//    // Function Name: deleteCompetitor
+//    // Parameters: competitorId (Integer) and principal (Principal). competitorId is the primary key used to identify a competitor and principal is used to handle user context.
+//    // Expected Result: The given competitor is deleted from the Iron Engineer database and competition.
+//    // Description: deletes a competitor from the Iron Engineer database and competition.
+//    // Notes: Administrator competitors cannot be deleted using this function. To delete an administrator direct database access is necessary.
+//    @RequestMapping(value = "/delete/competitor/{competitorId}",method = RequestMethod.GET)
+//    public ModelAndView deleteCompetitor(@PathVariable("competitorId") Integer competitorId,Principal principal){
+//        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+//        Competitor c;
+//
+//        if(competitorRepository.findById(competitorId).isPresent()){
+//            c = competitorRepository.findById(competitorId).get();
+//        }
+//        else{
+//            //TODO: return an erroR page here
+//            return new ModelAndView("redirect:/home");
+//        }
+//        if(c.getIsAdmin() == true){
+//            //todo: cant deelte admin error page
+//            return new ModelAndView("redirect:/home");
+//        }
+//        if(c.getTeamIdFK()!=null){
+//            Team team = teamRepository.findByTeamId(c.getTeamIdFK());
+//            team.removeTeamMember(c);
+//        }
+//        competitorRepository.delete(c);
+//
+//        return new ModelAndView("redirect:/admin/team/view");
+//
+//    }
+
+    // Function Name: removeCompetitor
+    // Parameters: competitorId (Integer), result (BindingResult) and principal (Principal).
+    // competitorId is the primary key used to identify a competitor. result and principal is used to handle user context.
+    // Expected Result: a competitor is removed from the Iron Engineer database and competition.
+    // Description: deletes a competitor from the Iron Engineer database and competition.
+    // Notes: Administrator competitors cannot be deleted using this function. To delete an administrator direct database access is necessary.
+    // The deleted competitor is removed from any team they may have joined.
+    @RequestMapping(value = "/team/remove/competitor/{competitorId}",method = RequestMethod.GET)
+    public ModelAndView removeCompetitor(@PathVariable("competitorId") Integer competitorId, BindingResult result,Principal principal){
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         Competitor c;
 
-        if(competitorRepository.findById(competitor_id).isPresent()){
-            c = competitorRepository.findById(competitor_id).get();
+        if(competitorRepository.findById(competitorId).isPresent()){
+            c = competitorRepository.findById(competitorId).get();
         }
         else{
             //TODO: return an erroR page here
@@ -213,32 +249,6 @@ public class AdminController {
         }
         if(c.getIsAdmin() == true){
             //todo: cant deelte admin error page
-            return new ModelAndView("redirect:/home");
-        }
-        if(c.getTeamIdFK()!=null){
-            Team team = teamRepository.findByTeamId(c.getTeamIdFK());
-            team.removeTeamMember(c);
-        }
-        competitorRepository.delete(c);
-
-        return new ModelAndView("redirect:/admin/team/view");
-
-    }
-
-    // Function Name:
-    // Parameters:
-    // Description:
-    // Notes:
-    @RequestMapping(value = "/team/remove/competitor/{competitor_id}",method = RequestMethod.GET)
-    public ModelAndView removeCompetitor(@PathVariable("competitor_id") Integer competitor_id, BindingResult result,Principal principal){
-        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
-        Competitor c;
-
-        if(competitorRepository.findById(competitor_id).isPresent()){
-            c = competitorRepository.findById(competitor_id).get();
-        }
-        else{
-            //TODO: return an erroR page here
             return new ModelAndView("redirect:/home");
         }
         if(c.getTeamIdFK()!=null){
@@ -254,10 +264,11 @@ public class AdminController {
 
     }
 
-    // Function Name:
-    // Parameters:
-    // Description:
-    // Notes:
+
+    // Function Name: addAdmins
+    // Parameters: None.
+    // Description: Prepares the form used to promote a competitor to an administrator account.
+    // Notes: Works in conjunction with addAdmin
     @RequestMapping(value="/addadmin",method = RequestMethod.GET)
     public ModelAndView addAdmins(){
         ModelAndView modelAndView = new ModelAndView("addAdmin");
@@ -266,10 +277,12 @@ public class AdminController {
         return modelAndView;
     }
 
-    // Function Name:
-    // Parameters:
-    // Description:
-    // Notes:
+    // Function Name: addAdmins
+    // Parameters: newAdmin (Competitor), model (ModelMap), and principal (Principal). newAdmin is the competitor that is to be
+    // promoted to an administrator. model and principal are used to handle user context.
+    // Expected Result: A competitor is promoted to an Administrator account and allowed to use administrator functions.
+    // Description: Promotes a competitor to an administrator account and grants them administrator privileges
+    // Notes: To promote a user to an administrator, the administrator must know the email of the user.
     @RequestMapping(value = "/addadmin/promote", method = RequestMethod.POST)
     public ModelAndView addAdmin(@Valid @ModelAttribute("newAdmin") Competitor newAdmin, ModelMap model, Principal principal){
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
