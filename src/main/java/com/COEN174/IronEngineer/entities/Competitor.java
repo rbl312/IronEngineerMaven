@@ -70,4 +70,25 @@ public class Competitor {
             return 0.0f;
         return distanceSwam;
     }
+
+    public void addDistanceSwam(float add){
+        if(add + distanceSwam < 0)
+            distanceSwam = 0.0f;
+        else
+            distanceSwam += add;
+    }
+
+    public void addDistanceBiked(float add){
+        if(add + distanceBiked < 0)
+            distanceBiked = 0.0f;
+        else
+            distanceBiked += add;
+    }
+
+    public void addDistanceRan(float add){
+        if(add + distanceRan < 0)
+            distanceRan = 0.0f;
+        else
+            distanceRan += add;
+    }
 }
