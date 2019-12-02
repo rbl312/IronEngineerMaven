@@ -51,7 +51,6 @@ public class LogController {
     @RequestMapping(value = "/addLog", method = RequestMethod.POST)
     public ModelAndView addLog(@Valid @ModelAttribute("newLog")Log newLog, BindingResult result, ModelMap model, Principal principal){
 
-
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         Map<String, String> map = new LinkedHashMap<>();
         String userName =  (String) details.get("name");
@@ -73,9 +72,9 @@ public class LogController {
             return new ModelAndView("redirect:/log");
         }
 
-        user.setDistanceRan(user.getDistanceRan()+newLog.getDistanceRan());
-        user.setDistanceBiked(user.getDistanceBiked()+newLog.getDistanceBiked());
-        user.setDistanceSwam(user.getDistanceSwam()+newLog.getDistanceSwam());
+        user.addDistanceRan(newLog.getDistanceRan());
+        user.addDistanceBiked(newLog.getDistanceBiked());
+        user.addDistanceSwam(newLog.getDistanceSwam());
         competitorRepository.save(user);
         return new ModelAndView("redirect:/home");
     }
