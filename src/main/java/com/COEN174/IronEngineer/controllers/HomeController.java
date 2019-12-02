@@ -25,10 +25,11 @@ public class HomeController {
     @Autowired
     private TeamRepository teamRepository;
 
-    // Function Name:
-    // Parameters:
-    // Description:
-    // Notes:
+    // Function Name: homeView
+    // Parameters: principal (Principal), used to handle user context.
+    // Expected Result: Returns the home view for a user.
+    // Description: returns the home view for a user.
+    // Notes: the home view includes items such as the user's name, team, distances completed, as well as links to functions like adding distances and joining teams.
     @RequestMapping("/home")
     public ModelAndView homeView(Principal principal) {
 

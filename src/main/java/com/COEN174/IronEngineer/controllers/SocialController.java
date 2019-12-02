@@ -25,6 +25,7 @@ public class SocialController extends WebSecurityConfigurerAdapter {
 
     // Function Name:
     // Parameters:
+    // Expected Result:
     // Description:
     // Notes:
     @RequestMapping("/user")
@@ -34,6 +35,7 @@ public class SocialController extends WebSecurityConfigurerAdapter {
 
     // Function Name:
     // Parameters:
+    // Expected Result:
     // Description:
     // Notes:
     //to logout the user, create a button sending them to /logout
@@ -48,6 +50,7 @@ public class SocialController extends WebSecurityConfigurerAdapter {
 
     // Function Name:
     // Parameters:
+    // Expected Result:
     // Description:
     // Notes:
     @Override

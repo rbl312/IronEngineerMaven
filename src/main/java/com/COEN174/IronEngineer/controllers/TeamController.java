@@ -29,6 +29,7 @@ public class TeamController {
 
     // Function Name:
     // Parameters:
+    // Expected Result:
     // Description:
     // Notes:
     //Setup user context
@@ -39,6 +40,7 @@ public class TeamController {
 
     // Function Name:
     // Parameters:
+    // Expected Result:
     // Description:
     // Notes:
     @RequestMapping("/find")
@@ -61,6 +63,7 @@ public class TeamController {
 
     // Function Name:
     // Parameters:
+    // Expected Result:
     // Description:
     // Notes:
     @RequestMapping(value = "/join/{teamId}")
@@ -93,6 +96,7 @@ public class TeamController {
 
     // Function Name:
     // Parameters:
+    // Expected Result:
     // Description:
     // Notes:
     @RequestMapping("/create")
@@ -108,6 +112,7 @@ public class TeamController {
 
     // Function Name:
     // Parameters:
+    // Expected Result:
     // Description:
     // Notes:
     @RequestMapping(value = "/add", method = RequestMethod.POST)

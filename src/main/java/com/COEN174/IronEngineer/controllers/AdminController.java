@@ -196,37 +196,6 @@ public class AdminController {
         return new ModelAndView("redirect:/admin/team/view");
     }
 
-//    // Function Name: deleteCompetitor
-//    // Parameters: competitorId (Integer) and principal (Principal). competitorId is the primary key used to identify a competitor and principal is used to handle user context.
-//    // Expected Result: The given competitor is deleted from the Iron Engineer database and competition.
-//    // Description: deletes a competitor from the Iron Engineer database and competition.
-//    // Notes: Administrator competitors cannot be deleted using this function. To delete an administrator direct database access is necessary.
-//    @RequestMapping(value = "/delete/competitor/{competitorId}",method = RequestMethod.GET)
-//    public ModelAndView deleteCompetitor(@PathVariable("competitorId") Integer competitorId,Principal principal){
-//        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
-//        Competitor c;
-//
-//        if(competitorRepository.findById(competitorId).isPresent()){
-//            c = competitorRepository.findById(competitorId).get();
-//        }
-//        else{
-//            //TODO: return an erroR page here
-//            return new ModelAndView("redirect:/home");
-//        }
-//        if(c.getIsAdmin() == true){
-//            //todo: cant deelte admin error page
-//            return new ModelAndView("redirect:/home");
-//        }
-//        if(c.getTeamIdFK()!=null){
-//            Team team = teamRepository.findByTeamId(c.getTeamIdFK());
-//            team.removeTeamMember(c);
-//        }
-//        competitorRepository.delete(c);
-//
-//        return new ModelAndView("redirect:/admin/team/view");
-//
-//    }
-
     // Function Name: removeCompetitor
     // Parameters: competitorId (Integer), result (BindingResult) and principal (Principal).
     // competitorId is the primary key used to identify a competitor. result and principal is used to handle user context.
