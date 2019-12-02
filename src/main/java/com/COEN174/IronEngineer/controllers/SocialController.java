@@ -23,11 +23,19 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 public class SocialController extends WebSecurityConfigurerAdapter {
 
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     @RequestMapping("/user")
     public Principal user(Principal principal) {
         return principal;
     }
 
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     //to logout the user, create a button sending them to /logout
     @RequestMapping(value="/logout", method = RequestMethod.GET)
     public ModelAndView logout (HttpServletRequest request, HttpServletResponse response) {
@@ -37,6 +45,11 @@ public class SocialController extends WebSecurityConfigurerAdapter {
         }
         return new ModelAndView("redirect:/");
     }
+
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off

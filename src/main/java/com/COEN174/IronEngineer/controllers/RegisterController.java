@@ -20,6 +20,10 @@ public class RegisterController {
     @Autowired
     private CompetitorRepository competitorRepository;
 
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     @RequestMapping("/register")
     public ModelAndView regview(Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();

@@ -25,6 +25,10 @@ public class HomeController {
     @Autowired
     private TeamRepository teamRepository;
 
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     @RequestMapping("/home")
     public ModelAndView homeView(Principal principal) {
 

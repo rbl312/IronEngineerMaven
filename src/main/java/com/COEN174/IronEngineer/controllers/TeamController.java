@@ -27,13 +27,20 @@ public class TeamController {
     @Autowired
     private CompetitorRepository competitorRepository;
 
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     //Setup user context
     @GetMapping("/all")
     public @ResponseBody Iterable<Team> findAllTeams(){
         return teamRepository.findAll();
     }
 
-
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     @RequestMapping("/find")
     public ModelAndView findTeam(){
         ModelAndView modelAndView = new ModelAndView("findTeam");
@@ -52,6 +59,10 @@ public class TeamController {
         return modelAndView;
     }
 
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     @RequestMapping(value = "/join/{teamId}")
     public ModelAndView joinTeam(@PathVariable("teamId") Integer teamId, Principal principal){
 
@@ -81,6 +92,10 @@ public class TeamController {
         return new ModelAndView("redirect:/home");
     }
 
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     @RequestMapping("/create")
     public ModelAndView createTeam(){
         ModelAndView modelAndView = new ModelAndView("create");
@@ -92,6 +107,10 @@ public class TeamController {
         return modelAndView;
     }
 
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ModelAndView addTeam(@Valid @ModelAttribute("newTeam")Team newTeam, BindingResult result, ModelMap model, Principal principal){
 

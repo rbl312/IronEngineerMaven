@@ -28,6 +28,10 @@ public class LogController {
     @Autowired
     private CompetitorRepository competitorRepository;
 
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     @RequestMapping("/log")
     public ModelAndView enterLogView() {
 
@@ -37,6 +41,10 @@ public class LogController {
         return modelAndView;
     }
 
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     @RequestMapping(value = "/addLog", method = RequestMethod.POST)
     public ModelAndView addLog(@Valid @ModelAttribute("newLog")Log newLog, BindingResult result, ModelMap model, Principal principal){
 

@@ -33,6 +33,12 @@ public class AdminController {
     @Autowired
     private TeamRepository teamRepository;
 
+    // Function Name: adminView
+    // Parameters: Principal of type Principal. Principal is used to retrieve user context (name,email, etc.) provided by Google login API.
+    // Expected Result: The home page for an administrator is presented. The home page will contain the administrator's name,
+    // name and administrator tools.
+    // Description: Returns the administrator home page for an administrator user.
+    // Notes: Non-administrator competitors attempting to access this page will be redirected to the competitor home page.
     @RequestMapping("/home")
     public ModelAndView adminView(Principal principal) {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
@@ -50,6 +56,12 @@ public class AdminController {
 
     }
 
+    // Function Name: showAllTeams
+    // Parameters: Principal of type Principal. Principal is used to retrieve user context (name,email, etc.) provided by Google login API.
+    // Expected Result: All teams currently in the system are displayed. Teams will be divided by approved and unapproved and will display other
+    // important information about the teams.
+    // Description: Returns a list of all teams currently in the system, separated by approved and unapproved team names.
+    // Notes: only admins may access this list. From this list administrator tools are available to modify a team as needed.
     @RequestMapping(value = "/allteam", method = RequestMethod.GET)
     public ModelAndView showAllTeams(Principal principal){
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
@@ -79,6 +91,11 @@ public class AdminController {
         modelAndView.addObject("unapprovedTeams",unapprovedTeams);
         return modelAndView;
     }
+
+    // Function Name: approveTeam
+    // Parameters: None
+    // Expected Result: Unapproved teams are displayed to the administrator, allowing them to select a team to approve.
+    // Notes: Selecting a team to approve will approve the team's name and register the team for the competition.
     @RequestMapping("/approve")
     public ModelAndView approveTeam(){
         ModelAndView modelAndView = new ModelAndView("approveTeam");
@@ -94,6 +111,13 @@ public class AdminController {
 
         return modelAndView;
     }
+
+    // Function Name: joinTeam
+    // Parameters: teamId and principal. teamId is an Integer that represents the primary key of the team to approve in the system
+    // database. Principal is of type Principal. Principal is used to retrieve user context (name,email, etc.) provided by Google login API
+    // Expected Result: The given team is approved and registered for the competition.
+    // Notes: Administrators are redirected to this page from /admin/approve. On a successful team approval, the administrator is
+    // returned to /admin/approve and ready to approve another team.
     @RequestMapping(value = "/approve/{teamId}")
     public ModelAndView joinTeam(@PathVariable("teamId") Integer teamId, Principal principal){
 
@@ -108,11 +132,16 @@ public class AdminController {
         Team t = teamRepository.findByTeamId(teamId);
         t.setApproved(1);
         teamRepository.save(t);
-
         //redirect to home page
         return new ModelAndView("redirect:/admin/approve");
     }
 
+    // Function Name: showAllTeams
+    // Parameters: None.
+    // Expected Result: All teams currently in the system are displayed. Teams will be divided by approved and unapproved and will display other
+    // important information about the teams.
+    // Description: Returns a list of all teams currently in the system, separated by approved and unapproved team names.
+    // Notes: only admins may access this list. From this list administrator tools are available to modify a team as needed.
     @RequestMapping(value = "/team/view")
     public ModelAndView viewTeam(){
         ModelAndView modelAndView = new ModelAndView("viewTeam");
@@ -127,6 +156,10 @@ public class AdminController {
         return modelAndView;
     }
 
+    // Function Name: viewTeamMembers
+    // Parameters: teamId, representing the primary key of a team
+    // Description: Returns the provided team object to be used in displaying the team mates in the model
+    // Notes: Works in conjunction with viewTeam
     @RequestMapping(value = "/team/view/{teamId}")
     public ModelAndView viewTeamMembers(@PathVariable("teamId") Integer teamId) {
         ModelAndView modelAndView = new ModelAndView("viewTeamMembers");
@@ -135,8 +168,13 @@ public class AdminController {
         modelAndView.addObject("team", chosenTeam);
         return modelAndView;
     }
-    @RequestMapping(value = "/remove/team/{team_id}",method = RequestMethod.GET)
-    public ModelAndView removeTeam(@PathVariable("team_id") Integer team_id,Principal principal){
+
+    // Function Name: removeTeam
+    // Parameters: teamId
+    // Description:
+    // Notes:
+    @RequestMapping(value = "/remove/team/{teamId}",method = RequestMethod.GET)
+    public ModelAndView removeTeam(@PathVariable("teamId") Integer teamId,Principal principal){
 
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String userName = (String) details.get("name");
@@ -146,7 +184,7 @@ public class AdminController {
             return new ModelAndView("redirect:/home");
         }
 
-        Team t = teamRepository.findByTeamId(team_id);
+        Team t = teamRepository.findByTeamId(teamId);
 
         for(Competitor comp :t.getCompetitors()){
             t.removeTeamMember(comp);
@@ -157,6 +195,10 @@ public class AdminController {
         return new ModelAndView("redirect:/admin/team/view");
     }
 
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     @RequestMapping(value = "/delete/competitor/{competitor_id}",method = RequestMethod.GET)
     public ModelAndView deleteCompetitor(@PathVariable("competitor_id") Integer competitor_id,Principal principal){
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
@@ -183,6 +225,10 @@ public class AdminController {
 
     }
 
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     @RequestMapping(value = "/team/remove/competitor/{competitor_id}",method = RequestMethod.GET)
     public ModelAndView removeCompetitor(@PathVariable("competitor_id") Integer competitor_id, BindingResult result,Principal principal){
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
@@ -208,6 +254,10 @@ public class AdminController {
 
     }
 
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     @RequestMapping(value="/addadmin",method = RequestMethod.GET)
     public ModelAndView addAdmins(){
         ModelAndView modelAndView = new ModelAndView("addAdmin");
@@ -216,6 +266,10 @@ public class AdminController {
         return modelAndView;
     }
 
+    // Function Name:
+    // Parameters:
+    // Description:
+    // Notes:
     @RequestMapping(value = "/addadmin/promote", method = RequestMethod.POST)
     public ModelAndView addAdmin(@Valid @ModelAttribute("newAdmin") Competitor newAdmin, ModelMap model, Principal principal){
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();

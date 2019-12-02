@@ -10,7 +10,7 @@
 <c:forEach items="${viewTeam}" var="team">
     <form action="/admin/team/view/${team.teamId}">
         Name: <c:out value= "${team.teamName}" />
-        Size: <c:out value="${team.size}"/>
+        Approved: <c:out value="${team.approved}"/>
         <button class = "button">View this team</button>
     </form>
     </br>
