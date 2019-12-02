@@ -23,22 +23,21 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 public class SocialController extends WebSecurityConfigurerAdapter {
 
-    // Function Name:
-    // Parameters:
-    // Expected Result:
-    // Description:
-    // Notes:
+    // Function Name: user
+    // Parameters: principal (Principal), used to handle user context.
+    // Expected Result: user's principal is returned.
+    // Description: principal is returned for the user, allowing for access to user context.
+    // Notes: Principal is used to handle user context such as email, name, password, etc.
     @RequestMapping("/user")
     public Principal user(Principal principal) {
         return principal;
     }
 
-    // Function Name:
-    // Parameters:
-    // Expected Result:
-    // Description:
-    // Notes:
-    //to logout the user, create a button sending them to /logout
+    // Function Name: logout
+    // Parameters: request (HttpServletRequest), and response (HttpServletResponse). request and response are used to handle the HTTP requests for logging a user out.
+    // Expected Result: The user is logged out of the Iron Engineer system.
+    // Description: User is logged out of the Iron Engineer system and returned to the sign in page.
+    // Notes: User is authenticated before logging out to ensure security.
     @RequestMapping(value="/logout", method = RequestMethod.GET)
     public ModelAndView logout (HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -48,10 +47,10 @@ public class SocialController extends WebSecurityConfigurerAdapter {
         return new ModelAndView("redirect:/");
     }
 
-    // Function Name:
-    // Parameters:
-    // Expected Result:
-    // Description:
+    // Function Name: configure
+    // Parameters: http (HttpSecurity) used to handle HTTP during configuration.
+    // Expected Result: HTTP requests are authorized and configured properly by the system.
+    // Description: Properly authorizes and configures incoming HTTP requests to the Iron Engineer system.
     // Notes:
     @Override
     protected void configure(HttpSecurity http) throws Exception {
