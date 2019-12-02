@@ -17,6 +17,11 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "Team")
+// Class Name: Team
+// Class Description: Used to represent a team within the Iron Engineer system.
+// Class Attributes: teamId (Integer) used to identify the team within the Iron Engineer database, teamName (String) to store the team's name, approved (boolean) to check that the team has been approved by an administrator,
+// and competitors (Set<Competitor>) used to store the competitors that are apart of the team.
+// Class Methods: addTeamMember and removeTeamMember, used to add and removes competitors from a team.
 public class Team {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -42,6 +47,10 @@ public class Team {
 
     public Team(){}
 
+    // Function Name: addTeamMember
+    // Function Parameters: competitor (Competitor), the given competitor to add to the team.
+    // Expected Result: The competitor is added to the team, with the database being modified to reflect these changes.
+    // Description: The competitor is added to the team.
     public boolean addTeamMember(Competitor competitor){
         if(competitors == null) {
             this.competitors = new HashSet<>();
@@ -55,6 +64,10 @@ public class Team {
         return true;
     }
 
+    // Function Name: removeTeamMember
+    // Function Parameters: competitor (Competitor), the given competitor to remove from the team.
+    // Expected Result: The competitor is removed from the team, with the database being modified to reflect these changes.
+    // Description: The competitor is removed from the team.
     public boolean removeTeamMember(Competitor competitor){
         if(this.competitors == null || !this.competitors.contains(competitor)){
             return false;
