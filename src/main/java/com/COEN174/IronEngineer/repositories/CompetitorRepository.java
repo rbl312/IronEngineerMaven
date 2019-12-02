@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.COEN174.IronEngineer.entities.Competitor;
 
 // Interface Name: CompetitorRepository
-// Interface Description: CRUD (Create Read Update Delete) repository implementation for the Competitor class
+// Interface Description: CRUD (Create Read Update Delete) repository implementation for the Competitor class and Competitor table in the Iron Engineer database.
 public interface CompetitorRepository extends CrudRepository<Competitor,Integer> {
 
     // Function Name: findByEmail

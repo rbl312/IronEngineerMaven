@@ -5,6 +5,8 @@ import com.COEN174.IronEngineer.entities.Team;
 
 import java.util.List;
 
+// Interface Name: TeamRepository
+// Interface Description: CRUD (Create Read Update Delete) repository implementation for the Team class and Team table in the Iron Engineer database.
 public interface TeamRepository extends CrudRepository<Team,Integer>{
     // Function Name: findByTeamName
     // Function Parameters: teamName (String), the team name of the team to be searched for
