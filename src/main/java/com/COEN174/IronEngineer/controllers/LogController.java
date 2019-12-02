@@ -70,6 +70,9 @@ public class LogController {
             return new ModelAndView("redirect:/log");
         }
 
+        if(newLog.getDistanceBiked() >= Float.MAX_VALUE || newLog.getDistanceRan() >= Float.MAX_VALUE || newLog.getDistanceSwam() >= Float.MAX_VALUE)
+            return new ModelAndView("redirect:/log");
+
         user.setDistanceRan(user.getDistanceRan()+newLog.getDistanceRan());
         user.setDistanceBiked(user.getDistanceBiked()+newLog.getDistanceBiked());
         user.setDistanceSwam(user.getDistanceSwam()+newLog.getDistanceSwam());
