@@ -30,8 +30,13 @@ public class RegisterController {
         String userName =  (String) details.get("name");
         String userEmail = (String) details.get("email");
 
-        Competitor newUser = new Competitor(userName, userEmail);
-        competitorRepository.save(newUser);
+
+        Competitor newUser = competitorRepository.findByEmail(userEmail);
+
+        if(newUser == null) {
+            newUser = new Competitor(userName, userEmail);
+            competitorRepository.save(newUser);
+        }
 
         ModelAndView modelAndView = new ModelAndView("register");
         modelAndView.addObject("name" , userName);

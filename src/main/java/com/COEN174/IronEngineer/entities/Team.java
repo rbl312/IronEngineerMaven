@@ -26,8 +26,6 @@ public class Team {
     @Column(name = "team_name")
     private String teamName;
 
-    @Column(name = "size")
-    private Integer size;
 
     @Column(name = "approved")
     private Integer approved;
@@ -37,7 +35,6 @@ public class Team {
 
     public Team(String teamName, Competitor competitor) {
         this.teamName = teamName;
-        this.size=0;
         this.approved=0;
         this.competitors = new HashSet<>();
         this.competitors.add(competitor);

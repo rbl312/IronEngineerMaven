@@ -7,10 +7,16 @@
 </head>
 
 <body>
-    <div>Enter new log</div>
-    <form:form method="POST"
-              action="/addLog" modelAttribute="newLog">
-                 <table>
+<div class= "row text-center">
+    <div class = "col">
+        Enter a new Log
+    </div>
+</div>
+<div class= "row text-center">
+    <div class = "col">
+        <form:form method="POST"
+            action="/addLog" modelAttribute="newLog">
+                <table>
                     <tr>
                         <td><form:label path="distanceSwam">Distance Swam (in Miles)</form:label></td>
                         <td><form:input path="distanceSwam"/></td>
@@ -32,7 +38,8 @@
                         <td><input type="submit" value="Submit"/></td>
                     </tr>
                 </table>
-     </form:form>
-
+        </form:form>
+    </div>
+</div>
 </body>
 </html>

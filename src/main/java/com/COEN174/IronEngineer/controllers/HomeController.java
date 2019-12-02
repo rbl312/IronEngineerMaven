@@ -37,8 +37,6 @@ public class HomeController {
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String userName = (String) details.get("name");
         String userEmail =  (String) details.get("email");
-        Integer teamApproved;
-        boolean isApproved = false;
 
 
         Competitor user = competitorRepository.findByEmail(userEmail);
@@ -55,23 +53,15 @@ public class HomeController {
         Team userTeam = teamRepository.findByTeamId(user.getTeamIdFK());
 //        teamApproved = userTeam.getApproved();
 
-
-        //This should be a value of User / Participant
-        //Would probably look more like if(user.getTeamId() == null) etc..
-        boolean isOnTeam =  userTeam != null;
-//        if(teamApproved == 1){
-//            isApproved = true;
-//        }
-//        else if(teamApproved == 0){
-//            isApproved = false;
-//        }
+        //Check to make sure user is on a team, if not, have them register on one
+        if(userTeam == null){
+            return new ModelAndView("redirect:/register");
+        }
 
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("name", userName);
-        modelAndView.addObject("isOnTeam", isOnTeam);
         modelAndView.addObject("userTeam", userTeam);
-        if(isOnTeam == true)
-            modelAndView.addObject("isApproved", userTeam.getApproved());
+        modelAndView.addObject("isApproved", userTeam.getApproved());
         return modelAndView;
     }
 

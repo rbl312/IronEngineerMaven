@@ -10,7 +10,7 @@
 
 <c:forEach items="${approvedTeams}" var="team">
     Team Name:<c:out value= "${team.teamName}" />
-    Team Size:<c:out value="${team.size}" />
+    Team Size:<c:out value="${team.getCompetitors().size()}" />
     <form action="/admin/team/view/${team.teamId}">
             <button class = "button">View Team</button>
     </form>
@@ -21,7 +21,7 @@
 
 <c:forEach items ="${unapprovedTeams}" var="team">
     Team Name:<c:out value="${team.teamName}" />
-    Team Size:<c:out value="${team.size}" />
+    Team Size:<c:out value="${team.getCompetitors().size()}" />
     <form action="/admin/team/view/${team.teamId}">
         <button class = "button">View Team</button>
     </form>
