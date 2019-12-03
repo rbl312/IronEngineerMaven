@@ -79,6 +79,7 @@ public class LogController {
         user.addDistanceRan(newLog.getDistanceRan());
         user.addDistanceBiked(newLog.getDistanceBiked());
         user.addDistanceSwam(newLog.getDistanceSwam());
+        newLog.setCompetitorId(user.getCompetitorId());
         competitorRepository.save(user);
         logRepository.save(newLog);
         return new ModelAndView("redirect:/home");

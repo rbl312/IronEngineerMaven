@@ -12,5 +12,5 @@ public interface LogRepository extends CrudRepository<Log,Integer> {
     // Expected Results: The given competitor is returned by searching the database for the competitor's email.
     // Function Description: Searches the Iron Engineer database for the provided email and returns a competitor if the email is registered in the system.
     // Notes: The implementation of this function is handled by the Spring Framework
-    public Log findByCompetitorId(Integer id);
+    public Log findByLogId(Integer id);
 }

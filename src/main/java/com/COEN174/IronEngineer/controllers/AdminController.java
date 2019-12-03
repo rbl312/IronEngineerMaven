@@ -61,7 +61,7 @@ public class AdminController {
     }
 
     @RequestMapping("/approve/log")
-    public ModelAndView approveLog(Principal principal){
+    public ModelAndView viewLogs(Principal principal){
         ModelAndView modelAndView = new ModelAndView("approveLogs");
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         String userName = (String) details.get("name");
@@ -83,6 +83,45 @@ public class AdminController {
 
         return modelAndView;
     }
+
+    @RequestMapping("/approve/log/{logId}")
+    public ModelAndView approveLog(Principal principal, @PathVariable("logId") Integer logId){
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String userName = (String) details.get("name");
+        String userEmail =  (String) details.get("email");
+        Competitor c = competitorRepository.findByEmail(userEmail);
+        if(c.getIsAdmin() != true){
+            return new ModelAndView("redirect:/home");
+        }
+
+        Log toApprove = logRepository.findByLogId(logId);
+        toApprove.setApproved(true);
+        logRepository.save(toApprove);
+
+        return new ModelAndView("redirect:/admin/approve/log");
+    }
+
+    @RequestMapping("/disapprove/log/{logId}")
+    public ModelAndView disapproveLog(Principal principal, @PathVariable("logId") Integer logId){
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String userName = (String) details.get("name");
+        String userEmail =  (String) details.get("email");
+        Competitor c = competitorRepository.findByEmail(userEmail);
+        if(c.getIsAdmin() != true){
+            return new ModelAndView("redirect:/home");
+        }
+
+        Log toApprove = logRepository.findByLogId(logId);
+        Optional<Competitor> toModify = competitorRepository.findById(toApprove.getCompetitorId());
+        toModify.get().addDistanceBiked(toApprove.getDistanceBiked()*-1);
+        toModify.get().addDistanceSwam(toApprove.getDistanceSwam()*-1);
+        toModify.get().addDistanceRan(toApprove.getDistanceRan()*-1);
+        competitorRepository.save(toModify.get());
+        logRepository.delete(toApprove);
+
+        return new ModelAndView("redirect:/admin/approve/log");
+    }
+
 
     // Function Name: showAllTeams
     // Parameters: Principal of type Principal. Principal is used to retrieve user context (name,email, etc.) provided by Google login API.
@@ -256,7 +295,7 @@ public class AdminController {
     // Notes: Administrator competitors cannot be deleted using this function. To delete an administrator direct database access is necessary.
     // The deleted competitor is removed from any team they may have joined.
     @RequestMapping(value = "/team/remove/competitor/{competitorId}",method = RequestMethod.GET)
-    public ModelAndView removeCompetitor(@PathVariable("competitorId") Integer competitorId, BindingResult result,Principal principal){
+    public ModelAndView removeCompetitor(@PathVariable("competitorId") Integer competitorId,Principal principal){
         Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
         Competitor c;
 

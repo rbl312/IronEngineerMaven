@@ -17,7 +17,7 @@
 <div class= "row text-center">
     <div class = "col">
         <c:forEach items="${approveLogs}" var="log">
-            <form action="/admin/approve/${log.logId}">
+            <form action="/admin/approve/log/${log.logId}">
                 <c:out value= "${log.logId}" />
                 </br>
                 Distance Swam = <c:out value= "${log.distanceSwam}" />
@@ -27,6 +27,9 @@
                 Distance Ran = <c:out value= "${log.distanceRan}" />
                 </br>
                 <button class = "button"> Approve this Log </button>
+            </form>
+            <form action="/admin/disapprove/log/${log.logId}">
+                <button class = "button"> Disapprove this Log </button>
             </form>
             </br>
         </c:forEach>
