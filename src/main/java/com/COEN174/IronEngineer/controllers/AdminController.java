@@ -1,8 +1,10 @@
 package com.COEN174.IronEngineer.controllers;
 
 import com.COEN174.IronEngineer.entities.Competitor;
+import com.COEN174.IronEngineer.entities.Log;
 import com.COEN174.IronEngineer.entities.Team;
 import com.COEN174.IronEngineer.repositories.CompetitorRepository;
+import com.COEN174.IronEngineer.repositories.LogRepository;
 import com.COEN174.IronEngineer.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -32,6 +34,9 @@ public class AdminController {
     @Autowired
     private TeamRepository teamRepository;
 
+    @Autowired
+    private LogRepository logRepository;
+
     // Function Name: adminView
     // Parameters: Principal of type Principal. Principal is used to retrieve user context (name,email, etc.) provided by Google login API.
     // Expected Result: The home page for an administrator is presented. The home page will contain the administrator's name,
@@ -53,6 +58,30 @@ public class AdminController {
         modelAndView.addObject("isAdmin", user.getIsAdmin());
         return modelAndView;
 
+    }
+
+    @RequestMapping("/approve/log")
+    public ModelAndView approveLog(Principal principal){
+        ModelAndView modelAndView = new ModelAndView("approveLogs");
+        Map<String, Object> details = (Map<String, Object>) ((OAuth2Authentication) principal).getUserAuthentication().getDetails();
+        String userName = (String) details.get("name");
+        String userEmail =  (String) details.get("email");
+        Competitor c = competitorRepository.findByEmail(userEmail);
+        if(c.getIsAdmin() != true){
+            return new ModelAndView("redirect:/home");
+        }
+
+
+        Iterable<Log> logs= logRepository.findAll();
+        List<Log> approveLogs = new ArrayList<>();
+        for (Log log : logs) {
+            if(!log.isApproved())
+                approveLogs.add(log);
+        }
+
+        modelAndView.addObject("approveLogs", approveLogs);
+
+        return modelAndView;
     }
 
     // Function Name: showAllTeams

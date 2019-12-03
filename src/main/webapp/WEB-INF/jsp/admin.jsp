@@ -20,6 +20,11 @@
         </form>
     </div>
     <div class = "col-sm">
+            <form action="/admin/approve/log">
+                <button class = "button">Approve Logs</button>
+            </form>
+        </div>
+    <div class = "col-sm">
         <form action="/admin/team/view">
             <button class = "button">View All Team Progress</button>
         </form>

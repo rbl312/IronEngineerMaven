@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.COEN174.IronEngineer.controllers", "com.COEN174.IronEngineer.entities", "com.COEN174.IronEngineer.repositories"})
+//@ComponentScan(basePackages = {"com.COEN174.IronEngineer.controllers", "com.COEN174.IronEngineer.entities", "com.COEN174.IronEngineer.repositories"})
 public class IronEngineerApplication extends SpringBootServletInitializer{
 
 	@Override

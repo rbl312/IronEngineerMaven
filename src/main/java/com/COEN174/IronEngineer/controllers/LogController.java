@@ -4,6 +4,7 @@ import com.COEN174.IronEngineer.entities.Competitor;
 import com.COEN174.IronEngineer.entities.Log;
 
 import com.COEN174.IronEngineer.repositories.CompetitorRepository;
+import com.COEN174.IronEngineer.repositories.LogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,9 @@ public class LogController {
 
     @Autowired
     private CompetitorRepository competitorRepository;
+
+    @Autowired
+    private LogRepository logRepository;
 
     // Function Name: enterLogView
     // Parameters: None.
@@ -76,6 +80,7 @@ public class LogController {
         user.addDistanceBiked(newLog.getDistanceBiked());
         user.addDistanceSwam(newLog.getDistanceSwam());
         competitorRepository.save(user);
+        logRepository.save(newLog);
         return new ModelAndView("redirect:/home");
     }
 }
